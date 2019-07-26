@@ -1,0 +1,24 @@
+nav {
+    height: 75px;
+}
+
+#content {
+    margin-top: 75px;
+    background-color: red;
+}
+
+.content-main {
+    background: gold;
+    display: flex;
+    min-height: calc(100vh - 150px);
+}
+
+#footer {
+    background: lightgreen;
+    min-height: 75px;
+}
+
+#footer .container {
+    background: blue;
+    min-height: 75px;
+}
