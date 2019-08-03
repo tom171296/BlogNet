@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
+import { RecentlyPlacedComponent } from './recently-placed/recently-placed.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OverviewComponent
+    OverviewComponent,
+    RecentlyPlacedComponent
   ],
   imports: [
     BrowserModule,

@@ -9,8 +9,17 @@ nav {
 
 .content-main {
     background: gold;
-    display: flex;
     min-height: calc(100vh - 150px);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.flex-container{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
 }
 
 #footer {
