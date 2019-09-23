@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview/overview.component';
 import { RecentlyPlacedComponent } from './recently-placed/recently-placed.component';
+import { FeaturedPostsComponent } from './featured-posts/featured-posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OverviewComponent,
-    RecentlyPlacedComponent
+    RecentlyPlacedComponent,
+    FeaturedPostsComponent
   ],
   imports: [
     BrowserModule,
