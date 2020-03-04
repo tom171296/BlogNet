@@ -24,7 +24,7 @@ github_username:  tom171296
 
 # Build settings
 markdown: kramdown
-# theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 
