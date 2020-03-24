@@ -1,5 +1,5 @@
 ---
-title: Secret management with Vault 
+title: Secret management in .NET core with Hashicorp Vault 
 published: true
-layout: post
 ---
+# content
