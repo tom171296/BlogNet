@@ -1,4 +1,4 @@
 ---
 Title: Secret management with Vault 
-published: false
+published: true
 ---
