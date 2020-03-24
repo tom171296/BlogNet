@@ -1,4 +1,5 @@
 ---
-Title: Secret management with Vault 
+title: Secret management with Vault 
 published: true
+layout: post
 ---
