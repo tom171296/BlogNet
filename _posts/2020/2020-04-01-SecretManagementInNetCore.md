@@ -1,9 +1,8 @@
 ---
-title: Secret management in .NET core with Hashicorp Vault 
 header:
     overlay_image: ../../assets/images/blogheader.jpg
     caption: Secret management in .NET core with Hashicorp Vault
-tagline: test
+tagline: This blog will give an introduction into secretmanagement and how you can use Hashicorp Vault with .Net Core 
 published: true
 categories: [Security, Secrets]
 tags: [.NET Core, Vault]
