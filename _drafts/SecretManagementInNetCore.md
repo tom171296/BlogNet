@@ -22,7 +22,8 @@ There are many best practices that can prevent hackers to get access to your env
 
 At first we have to deploy Vault. For development purposes Vault has a 'dev' server mode which doesn't require additional settings.This blog won't go into all the settings that are required for setting up Vault, this blog will fully focus on the use of Vault in .Net Core.
 
-To make it easy for you I created a [demo project](https://github.com/tom171296/SecretManagement-NetCore-Vault) where I placed a docker file that you can use to start a Vault instance in dev mode.
+To make it easy for you I created a [demo project](https://github.com/tom171296/SecretManagement-NetCore-Vault) where I placed a docker file that you can use to start a Vault instance in dev mode. You can verify that Vault is running by going to [localhost:8200](http://localhost:8200), here you should see the Vault UI like the picture below.
+
 
 
 
