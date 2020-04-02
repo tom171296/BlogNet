@@ -19,6 +19,16 @@ Software that is deployed is vulnerable for hacking attempts and you can try as 
 
 There are many best practices that can prevent hackers to get access to your environment, but what if they get through en get access to your environment? In this blog I will tell you the basics of  secret management in .Net Core using [Hashicorp Vault](https://www.vaultproject.io/).
 
-onderwerpen:
+
+At first we have to deploy Vault. For development purposes Vault has a 'dev' server mode which doesn't require additional settings.This blog won't go into all the settings that are required for setting up Vault, this blog will fully focus on the use of Vault in .Net Core.
+
+To make it easy for you I created a [demo project](https://github.com/tom171296/SecretManagement-NetCore-Vault) where I placed a docker file that you can use to start a Vault instance in dev mode.
+
+
+
+    - policies
+    - authorization
+- Statische secrets .Net Core
+- Dynamische secrets (Database)
 
 
