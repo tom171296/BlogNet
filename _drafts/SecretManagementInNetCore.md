@@ -33,13 +33,35 @@ The third challenge has to do with __secret rotation__. It's very common to chan
 
 ## Hashicorp vault 
 
+The biggest solution for all the above called challenges is to centralize all of your secrets right. That is exactly what vault offers. A centralized place to keep your secrets secure.
+
+
+
 - centralize secrets
+    Encrypt 
+        At rest
+        In transit
+
+    ACL
+
+    Audit trail
+
 - dynamic secrets
+    Ephemeral secrets
+
+    Unique for each client
+
+    Revocation
+
 - Encryption
+    Save encryption keys
+
+    Encrypt as a service
+
 
 ## Vault’s architecture
 
-
+![alt text](../assets/images/2020/HashicorpVault/architecture.png "Vault architecture")
 
 ## Demo
 
