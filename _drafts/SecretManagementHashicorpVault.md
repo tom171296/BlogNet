@@ -9,7 +9,7 @@ tags: [Hashicorp, Vault]
 ---
 
 
-Almost every application uses secrets to access secured parts of the software landscape. A secret can be something like a client secret, database credentials or other sensitive data. I think that almost everyone can relate to me when I say that keeping secrets in config files with the rest of your code base is a very "easy" solution for keeping your secrets. A sentence that I have heared a lot when it comes to keeping secrets in your code base is:
+Almost every application uses secrets to access secured parts of the software landscape. I think that almost everyone can relate to me when I say that keeping secrets in config files with the rest of your code base is a very "easy" solution for keeping your secrets. A sentence that I have heared a lot when it comes to keeping secrets in your code base is:
 
 > 'Why not, the only persons that can access our code base is our team self.'
 
@@ -17,7 +17,7 @@ This was something that I told myself too, but keeping your secrets in configura
 
 Software that is deployed is vulnerable for hacking attempts and you can try as hard as you can, but hackers will eventually be able to access your environment and have access to all of your secrets. In this way, they immediatly have access to your database or other secured parts of your landscape.
 
-There are many best practices that can prevent hackers to get access to your environment, but what if they get through en get access to your environment? Do you feel safe engough to keep your secrets lying around? In this blog I will tell you the basics of secret management with [Hashicorp Vault](https://www.vaultproject.io/).
+There are many best practices that can prevent hackers to get access to your environment, but what if they get through en get access to your environment? Do you feel safe engough to keep your secrets lying around? In this blog I will tell you about the basics of secret management with [Hashicorp Vault](https://www.vaultproject.io/).
 
 ## Secret management
 
@@ -33,7 +33,9 @@ The third challenge has to do with __secret rotation__. It's very common to chan
 
 ## Hashicorp vault 
 
-The biggest solution for all the above called challenges is to centralize all of your secrets right. That is exactly what vault offers. A centralized place to keep your secrets secure.
+The biggest solution for all the above called challenges is to centralize all of your secrets right. That is exactly what vault offers. A centralized place to keep your secrets secure. Beside a centralized place to keep your secrets, storing your secrets in vault has a few more benefits. 
+
+Vault is build to keep your secrets secure, but what if vault self get compromised
 
 
 
