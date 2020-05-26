@@ -8,7 +8,6 @@ categories: [Security, Secret management]
 tags: [Hashicorp, Vault]
 ---
 
-
 Almost every application uses secrets to access secured parts of the software landscape. I think that almost everyone can relate to me when I say that keeping secrets in config files with the rest of your code base is a very "easy" solution for keeping your secrets. A sentence that I have heared a lot when it comes to keeping secrets in your code base is:
 
 > 'Why not, the only persons that can access our code base is our team self.'
@@ -25,7 +24,7 @@ In my opinion, a secret is everything that grants authentication or authorizatio
 
 If you ask me, managing secrets is hard. Managing secrets includes a few things. One of them is keeping track of whom has access to which secret (Access control management). The second thing is that you should know whom is using which secret (Audit trail). So in case of a security breach you can see who is responsible for the breach. The third part of secret management is to able to rotate a secret.
 
-These management tasks come with 'a few' challenges. For example, one of the most obvious challenges is __secret sprawl__. This means that all your secrets are spread through your application. A few places of which you can find your secrets is in your source code (hard coded), in configuration files and ultimately in your VCS (Version Control system like git).
+These management tasks come with 'a few' challenges. For example, one of the most obvious challenges is __secret sprawl__. This means that all your secrets are spread through your application. A few places of which you can find your secrets is in your source code (hard coded), in configuration files and ultimately in your VCS (Version Control system like git). How do you keep track of where all your secrets are?
 
 The second challenge is a consequence of secret sprawl, namely __access control__. Try to keep track of whom has access to which secret if they are all spread accross your code base. For example, if you have a development team that can access your code base, the whole team has access to your secrets. Or if you have an ops guy that is in charge over your environments, he can access the secrets that are in the configuration files. In other words, there are most likely more people who have access to your secrets then you know. Beside knowing who has access to your secrets, it can also be very usefull to know whom has used a secret. So you can find out what secret has been compromised and by whom. 
 
@@ -33,20 +32,15 @@ The third challenge has to do with __secret rotation__. It's very common to chan
 
 ## Hashicorp vault 
 
-The biggest solution for all the above called challenges is to centralize all of your secrets right. That is exactly what vault offers. A centralized place to keep your secrets secure. Beside a centralized place to keep your secrets, storing your secrets in vault has a few more benefits. 
+Vault is, as the name says, a vault that can be used to store secrets. Vault serves as a centralized place where you can store your secrets. All secrets are stored on a virtual file sytem. So every secret has its a path on which it can be accessed. Beside a centralized place to keep your secrets, using vault has a few more benefits. To keep your secrets save, all secrets stored in vault are encrypted. At rest as well as in transit are secrets encrypted, so if someone gets access to the secrets they can't read it.
 
-Vault is build to keep your secrets secure, but what if vault self get compromised
+Beside keeping your secrets safe, vault also provide an acces control layer (ACL). This means that you are able to create policies to which you can restrict the access for your secrets to whom needs access. Vault operates on a __secure by default__ standard, and as such, an empty policy grants __no permissions__ in the system. Therefore policies must be created to govern the behavior of clients and instrument Role-based Access Control (RBAC) by specifiying access privileges (authorization).
+
+All secrets that are used are accessed via vault, this means that vault can keep a detailed log of all requests and responses. Because every operation with Vault is an API request/response, the audit log contains every authenticated interaction with Vault, including errors. It's possible to enable multiple audit devices, vault will send the the audit logs to all the devices enabled. Each line in the audit log is a JSON object. There are currently two types of logs, request and response. The line contains all of the information for any given request and response. By default, all the sensitive information is first hashed before logging in the audit logs.
+
+### Dynamic secrets
 
 
-
-- centralize secrets
-    Encrypt 
-        At rest
-        In transit
-
-    ACL
-
-    Audit trail
 
 - dynamic secrets
     Ephemeral secrets
@@ -56,12 +50,15 @@ Vault is build to keep your secrets secure, but what if vault self get compromis
     Revocation
 
 - Encryption
+    
     Save encryption keys
 
     Encrypt as a service
 
 
 ## Vault’s architecture
+
+Vault has a highly plugable architecture. This means that it can ......
 
 ![alt text](../assets/images/2020/HashicorpVault/architecture.png "Vault architecture")
 
