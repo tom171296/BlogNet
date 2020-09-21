@@ -50,8 +50,11 @@ The second benefit of using dynamic secrets is that a secret can be unique for e
 
 Another benefit that comes with using unique secrets is that we can have a much better revocation story. So now when we now what secret is compromised, we can revoke it. This results in an isolated security breach that doesn't effect all the other services whom are using there own secret.
 
-
 ### Encryption
+
+I hear a lot of you think, 'wow, vault is cool! maybe we can store our encryption keys in there to keep them safe!', and that can be done by using vault easily. But like I said earlier, vault doesn't trust its users and for that reason they don't encourage you to store your encryption key in Vault and do the cryptography logic yourself in your application. 
+
+The idea of not trusting the application with doing cryptography correct evolved in developing an Encrypt as a Service functionality in Vault. This service exposes a set of high level api's that do cryptography with the functionalities that you expect: Encrypt, decrypt, sign and verify. This api needs you to create a set of named types. These types will be used to encrypt your data. TODO: more here.......
 
 - Encryption
     
