@@ -56,11 +56,23 @@ I hear a lot of you think, 'wow, vault is cool! maybe we can store our encryptio
 
 The idea of not trusting the application with doing cryptography correctly evolved in developing an Encrypt as a Service functionality in Vault. This service exposes a set of high level api's that do cryptography with the functionalities that you expect: Encrypt, decrypt, sign and verify. This api needs you to create a set of named keys, just specify the name of the key and the value of the key is handled by Vault. These keys will be used to encrypt your data. So as a developer tell vault to encrypt data using HMAC with some named key you created first and the peace of data.
 
+The cryptography implementation of vault is audited by Hashicorps own expert and is also audited by external expert, so they make sure that there implementation is correctly done. Using vault for your cryptography also offloads the keymanagement for your encryption to vault.
+
 ## Vault’s architecture
 
-Vault has a highly plugable architecture. This means that it can ......
+Vault has a highly plugable architecture. This means that it has many pluggin mechanisms. Below you see a image that shows vault architecture.
 
 ![alt text](../assets/images/2020/HashicorpVault/architecture.png "Vault architecture")
+
+The core of the architecture is responsible for a few things like life cycle management and make sure that all request are processed correctly. Arround the core there are many extension points that allow a users to fit something in the vault environment.
+
+The first one that is really important is the authentication backends. These allow vault to allow client to authenticate from different systems. For example, if you are using an EC2 VM then you can add the AWS authentication backend. With that backend vault can make use of aws' notion of identity to prove that the caller is for example a web server. The goal of the authentication backends is to make use of an application we trust and use it to prove identity of the user. All authentication backends are providing a notion of identity of the caller to vault. 
+
+The auditing backend is used to output a trail of who has done what. So this output can be written to splunk for example. It's possible to have multiple different audit trail backends with vault. So it's possible to send the trail to splunk, but also to a system like syslog.
+
+The storage backend is used to provide a plugin possibilty for a storage for vault. Vault itself is stateless and will always need some type of storage to keep its data secure at rest. For example if there is a new release of vault, all data would be gone if there is no storage backend. This can be a couple of different things like a standard RDBMS, a system like Consul or a cloud managed database. The goal of the storage is to provide durable storage that is highly available.
+
+The biggest use of the secrets backend is to enable the use of dynamic secrets I talked about earlier. The simplest form of secret backend is key/value. These are static secrets like username and password. The coolest part of the secrets backend is the dynamic secret capability. There are different plugins that allow vault to create dynamic secrets for the backends that are connected. It's possible to create dynamic ........
 
 ## Demo
 
