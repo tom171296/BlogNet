@@ -1,9 +1,9 @@
 ---
 title: Secret management with Hashicorp Vault
 header:
-    overlay_image: ../../assets/images/blogheader.jpg
+    overlay_image: ../../assets/images/2021/HashicorpVault/blogheader.jpg
 tagline: This blog will give an introduction into secretmanagement and how you can use Hashicorp Vault with .Net Core 
-published: true
+published: false
 categories: [Security, Secret management]
 tags: [Hashicorp, Vault]
 ---
@@ -39,15 +39,16 @@ Beside keeping your secrets safe, vault also provide an acces control layer (ACL
 All secrets that are used are accessed via vault, this means that vault can keep a detailed log of all requests and responses. Because every operation with Vault is an API request/response, the audit log contains every authenticated interaction with Vault, including errors. It's possible to enable multiple audit devices, vault will send the the audit logs to all the devices enabled. Each line in the audit log is a JSON object. There are currently two types of logs, request and response. The line contains all of the information for any given request and response. By default, all the sensitive information is first hashed before logging in the audit logs.
 
 ### Dynamic secrets
+In general, application do a terrible job at keeping secrets. Inevitably the application will log its credentials to standard out, which get shipped to something like Splunk, and anyone can see the secret. Perhaps the application will have an exception and shows the secret in a traceback or error report. In short, applications can't be trusted with keeping there secrets secret.
 
+That is where Vault second level capability comes in, __dynamic secrets__. Dynamic secrets are ephemeral secrets, which means that they are only valid for a certain amount of time. Lets say, an application uses a dynamic database password which is valid for ten days. The application has an exception which result in a log to standard out that contains the database password. After ten days, a hacker gets access to the logs of the application and sees the database password. As he tries to use it, to get access to the database, his authorization fails because the password is not valid anymore. Therefore the level of security of the database is much higher than using a static password. 
 
+Each application that uses a dynamic secrets gets its own unique secret. There are a few benefits the come hand in hand with using unique secret per application. The first one is that if a secret get compromised, you can immediatly trace it back to the application that has caused the leak. This allows the development team to investigate and solve security breaches faster, because they know what secret was compromised and to which service this secret was served.
 
-- dynamic secrets
-    Ephemeral secrets
+The second benefit what comes with using unique secrets is that it's much easier to do secret revocation. So lets say your database password gets compromised and you need to change it immediatly. If you're using a static database password, then you have to change your password in every application that is connection to the database using that exact password but how sure are you that you changed all passwords before revoking the compromised secret? The blast radius of a static password is much bigger because you have to be sure that all applications are using the new password. Vaults unique secrets solves this problem! Each application has its own secret that can be revoked individually. 
 
-    Unique for each client
+I created a [demo project](https://github.com/tom171296/SecretManagement-Vault) where vault controles the secrets that are used by an application that connects to RabbitMQ. Just follow the readme and everything should be clear!
 
-    Revocation
 
 - Encryption
     
@@ -60,10 +61,5 @@ All secrets that are used are accessed via vault, this means that vault can keep
 
 Vault has a highly plugable architecture. This means that it can ......
 
-![alt text](../assets/images/2020/HashicorpVault/architecture.png "Vault architecture")
+![alt text](../assets/images/2021/HashicorpVault/architecture.png "Vault architecture")
 
-## Demo
-
-At first we have to deploy Vault. For development purposes Vault has a 'dev' server mode which doesn't require additional settings.This blog won't go into all the settings that are required for setting up Vault, this blog will fully focus on the use of Vault in .Net Core.
-
-To make it easy for you I created a [demo project](https://github.com/tom171296/SecretManagement-Vault) where I placed a docker file that you can use to start a Vault instance in dev mode. You can verify that Vault is running by going to [localhost:8200](http://localhost:8200), here you should see the Vault UI like the picture below.
