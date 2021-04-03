@@ -67,7 +67,7 @@ The cryptography implementation of vault is audited by Hashicorps own expert and
 
 Vault has a highly plugable architecture. This means that it has many pluggin mechanisms. Below you see a image that shows vault architecture.
 
-![alt text](/assets/images/architecture.png "Vault architecture")
+![alt text](../../assets/images/architecture.png "Vault architecture")
 
 The core of the architecture is responsible for a few things like life cycle management and make sure that all request are processed correctly. Arround the core there are many extension points that allow a users to fit something in the vault environment.
 
