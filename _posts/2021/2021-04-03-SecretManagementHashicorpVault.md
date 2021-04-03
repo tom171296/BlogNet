@@ -6,6 +6,7 @@ tagline: This blog will give an introduction into secretmanagement using Hashico
 published: true
 categories: [Security, Secret management]
 tags: [Hashicorp, Vault]
+featured-image: /assets/images/blogheader.jpg
 ---
 
 Almost every application uses secrets to access secured parts of the software landscape. I think that almost everyone can relate to me when I say that keeping secrets in config files with the rest of your code base is a very "easy" solution for keeping your secrets. A sentence that I have heared a lot when it comes to keeping secrets in your code base is:
