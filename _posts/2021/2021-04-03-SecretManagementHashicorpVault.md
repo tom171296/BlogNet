@@ -79,5 +79,5 @@ The storage backend is used to provide a plugin possibilty for a storage for vau
 
 The biggest use of the secrets backend is to enable the use of dynamic secrets I talked about earlier. The simplest form of secret backend is key/value. These are static secrets like username and password. The coolest part of the secrets backend is the dynamic secret capability. There are different plugins that allow vault to create dynamic secrets for the backends that are connected. 
 
-I hope that I got you guys excited to get started with Vault. In my opinion, Vault is one of the best secret management tools that is isn't cloud native.
+I hope that I got you guys excited to get started with Vault. In my opinion, Vault is one of the best secret management tools that isn't cloud native.
 
