@@ -22,6 +22,9 @@ github_username: tom172196
 minimal_mistakes_skin: default
 search: true
 
+logo: "/assets/images/logo.PNG"
+masthead_title: ""
+
 # url: ""
 # baseurl: "www.blognet.tech"
 
