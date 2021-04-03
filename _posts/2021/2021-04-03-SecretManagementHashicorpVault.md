@@ -1,8 +1,8 @@
 ---
 title: Secret management with Hashicorp Vault
-header:
-    teaser: /assets/images/blogheader.jpg
+header:    
     overlay_image: /assets/images/blogheader.jpg
+    teaser: /assets/images/blogheader.jpg
 tagline: This blog will give an introduction into secretmanagement using Hashicorp Vault
 published: false
 categories: [Security, Secret management]
@@ -77,4 +77,7 @@ The auditing backend is used to output a trail of who has done what. So this out
 
 The storage backend is used to provide a plugin possibilty for a storage for vault. Vault itself is stateless and will always need some type of storage to keep its data secure at rest. For example if there is a new release of vault, all data would be gone if there is no storage backend. This can be a couple of different things like a standard RDBMS, a system like Consul or a cloud managed database. The goal of the storage is to provide durable storage that is highly available.
 
-The biggest use of the secrets backend is to enable the use of dynamic secrets I talked about earlier. The simplest form of secret backend is key/value. These are static secrets like username and password. The coolest part of the secrets backend is the dynamic secret capability. There are different plugins that allow vault to create dynamic secrets for the backends that are connected. It's possible to create dynamic ........
+The biggest use of the secrets backend is to enable the use of dynamic secrets I talked about earlier. The simplest form of secret backend is key/value. These are static secrets like username and password. The coolest part of the secrets backend is the dynamic secret capability. There are different plugins that allow vault to create dynamic secrets for the backends that are connected. 
+
+I hope that I got you guys excited to get started with Vault. In my opinion, Vault is one of the best secret management tools that is isn't cloud native.
+
