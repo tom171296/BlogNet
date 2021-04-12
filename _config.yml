@@ -67,7 +67,7 @@ author:
   I write blogs about topics that I think are interesting and are very needed in the current world of software development."
   links:
     - label: "LinkedIn"
-      icon: "fas fa-fw fa-linkedin"
+      icon: "fab fa-fw fa-linkedin-in"
       url: "https://www.linkedin.com/in/tom-van-den-berg-953643127/"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
