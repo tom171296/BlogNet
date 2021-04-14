@@ -32,7 +32,7 @@ The second challenge is a consequence of secret sprawl, namely __access control_
 The third challenge has to do with __secret rotation__. It's very common to change a secret once in a while. There can be different reasons why you should do that, for example if a secret gets compromised, or if a secret gets out dated. It's very hard to rotate a secret that is hardcoded in the system or a secret that is spread across multiple applications. The change that you missed a secret in some hidden configuration file is always there.
 
 ## Hashicorp vault 
-Hashicorp vault is, as the name says, a vault that serves as a centralized place to store your secrets. Vault uses a virtual file sytem, so every secret has its own path on which it can be accessed. Vault keeps your data safe using encryption for your data. So at rest, as well as in transit, your data is safely stored in vault.
+Hashicorp vault is, as the name says, a vault that serves as a centralized place to store your secrets. Vault uses a virtual file sytem, so every secret has its own path on which it can be accessed. All data that is stored will be encrypted. This means that data is encrypted at rest, as well as in transit.
 
 Beside keeping your secrets safe, vault also provide an acces control layer (ACL). This means that you are able to create policies to which you can restrict the access for your secrets to who needs access. Vault operates on a __secure by default__ standard, and as such, an empty policy grants __no permissions__ in the system. Therefore policies must be created to govern the behavior of clients and instrument Role-based Access Control (RBAC) by specifiying access privileges (authorization).
 
