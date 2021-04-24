@@ -1,0 +1,22 @@
+---
+title: Building a mesh integration platform based on an open standard
+header:    
+    overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
+    teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
+tagline: In this blog I will tell you all about QPID dispatch routers and how we build an integration platfrom based on it.
+published: false
+categories: [Integration, Open standard]
+tags: [Apache, QPID dispatch, AMQP]
+---
+
+Every large enterprise has the same problem. There are a lot of applications that need to communicate with eachother. But how do you do that when there is more than one cloud in which your applications are running. In this blog I will tell you about how you can build an **mesh based** integration platform that is based on the open standard **AMQP**. 
+
+# The vision
+I don't know about you guys, but the projects that I saw since I started with my job as a software developer where all very different. The one team had it all together and where able to keep there own pants up but I also saw a lot of applications that where not able to keep there pants up by themself. This applications were fully relying in the integration platform that they were using and even rely on the firewall to keep them safe. Building resilience applications is not as standard as you might think. 
+
+
+
+
+
+This vision can only be succesfull if all the applications that are going to connect to the platform will be able to keep there own pants up. The vision of the platform is that it should only serve as a data transport platform. There is no 
+
