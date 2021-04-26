@@ -3,13 +3,15 @@ title: Building a mesh integration platform based on an open standard
 header:    
     overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
-tagline: In this blog I will tell you all about QPID dispatch routers and how we build an integration platfrom based on it.
+tagline: Building a decentralized integration platform based on AMQP 1.0
 published: false
 categories: [Integration, Open standard]
 tags: [Apache, QPID dispatch, AMQP 1.0]
 ---
 
 Every large enterprise has the same problem. There are a lot of applications that need to communicate with eachother. But how do you do that when there is more than one cloud in which your applications are running. In this blog I will tell you about how you can build an **mesh based** integration platform that is based on the open standard **AMQP 1.0** and is able to connect different (cloud) environments together. 
+
+**HET PROBLEEM** **iets met centralized integration platform**
 
 # The vision
 NOG VERWERKEN:
@@ -36,3 +38,7 @@ These four routers will form the base of our platform. A router has a few modes 
 
 When a connection is established between routers, message traffic flows in both directions across that connection. Each connection has a client side (a connector) and a server side (a listener) for the purposes of connection establishment.
 
+**Benefits of the network**
+
+# Connecting your application
+As part of the decentralized platform, each application team is going to participate in the network. 
