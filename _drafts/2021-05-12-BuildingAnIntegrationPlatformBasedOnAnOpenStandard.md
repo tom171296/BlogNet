@@ -1,5 +1,5 @@
 ---
-title: Building a mesh integration platform based on an open standard
+title: Open standard based enterprise integration platform
 header:    
     overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
@@ -20,7 +20,10 @@ Thus a decentralized platform with which the team can manage integrations with o
 
 Keeping in mind that in 2021 the amount of data that is being processed by applications is increasing more and more. Data gets a more important place in the IT world. The platform should be scalable to be able to process constantly getting bigger amounts of data. Sending more data over the platform should not result in a slower data flow. The platform should be smart enough to route high volume data in a way that it takes the shortest, less utilized route.
 
-In short, the way I see this platform is that it has to be a decentralized platform, where every team can handle their own integration. At the same time, applications should be loosely coupled by the platform and should even be allowed to run in a whole different (cloud) environment. The platform is going to connect them and knows what application is interested in which data. The amount of data that is processed by the platform should not play a role. The solution should be able to scale on demand and above all should not slow down the more data is being processed. 
+In short, the way I see this platform is that it has 
+- Decentralized;
+- Decouple applications (and their environment);
+- Scalable.
 
 # QPID dispatch router
 With this vision we are gonna build the platform. The technology that is used to build the platform is [Apache QPID dispatch routers](https://qpid.apache.org/components/dispatch-router/index.html). This is a high-performance, lightweight AMQP 1.0 message router. These software routers are forming the base of the platform. 
