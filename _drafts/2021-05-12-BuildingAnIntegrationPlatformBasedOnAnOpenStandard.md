@@ -44,18 +44,13 @@ The QPID-dispatch routers support two types of routing messages. Each type of ro
 ## Message routing
 With message routing the logic of transport is handled within the network. A message that is published on a channel 
 
+### Properties
+
 ## Linked routing
 
-- Message-base routing vs Linked-base routing
-
-**Benefits of the network**
-## Challenges
-
-
-# Supporting patterns
+### Properties
 
 # Connecting your application
-As part of the decentralized platform, each application team is going to participate in the network. 
 
 # Whats next
 Uitbreidings mogelijkheden op alle patronen en het platform
