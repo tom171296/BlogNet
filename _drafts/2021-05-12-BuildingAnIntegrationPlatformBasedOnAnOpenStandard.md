@@ -76,7 +76,7 @@ Message routing has a number of properties
 The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but that results in that message order can not be guaranteed.
 
 ## Linked routing
-A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints.
+A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints. 
 
 # Connecting your application
 
