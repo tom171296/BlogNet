@@ -71,7 +71,7 @@ Message routing has a number of properties
 - **horizontally scalable**
 - **high speed, low latency**
 
-The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but it also pays in that message order can not be guaranteed.
+The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but that results in that message order can not be guaranteed.
 
 ## Linked routing
 
