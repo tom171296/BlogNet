@@ -42,14 +42,16 @@ AMQP 1.0 itself is an open standard with all the benefits of that. On top of all
 - Flexible: AMQP 1.0 is a flexible protocol that can be used to support different topologies. The same protocol can be used for client-to-client, client-to-broker, and broker-to-broker communications.
 - Broker-model independent: The AMQP 1.0 specification doesn't make any requirements on the messaging model used by a broker. This means that it's possible to easily add AMQP 1.0 support to existing messaging brokers.
 
+The protocol works with credit base consumption. This means that a consumers gives AMQP credits to the network if it wants to consume messages. A producer is blocked when he wants to publish a message to a certain address but there are no credits.
+
 # QPID dispatch router
 The technology that we are gonna build the platform with is [Apache QPID dispatch router](https://qpid.apache.org/components/dispatch-router/index.html). This is a high-performance, lightweight AMQP 1.0 message router. These software routers are forming the base of the platform. 
 
 Each environment that should participate in the network needs to run at least two of these routers (for HA capabilities). So lets say we want to build the platform for AWS and Azure, then it would look like this. 
 
-![PlatformBase](../assets/images/2021/IntegrationPlatform/PlatformBase.png)
+Four routers will form the base of our platform. A router has a few modes where it can run in. The routers we deploy for the base of the platform are in **interior mode**. This mode allows a router to be part of the interior network of the platform. Interior routers establish connections with each other and automatically compute the lowest cost paths across the network. You can have up to 128 interior routers in the router network. Applications that want to connect to the interior network do this via a seperate router. This router is deployed in **edge mode** and can connect to one or more interior routers. An edge router does not participate in the routing protocol of the network and is purely required from message production and consumption.
 
-These four routers will form the base of our platform. A router has a few modes where it can run in. The routers we deploy for the base of the platform are in interior mode. This mode allows a router to be part of the interior network of the platform. Interior routers establish connections with each other and automatically compute the lowest cost paths across the network. You can have up to 128 interior routers in the router network.
+![PlatformBase](../assets/images/2021/IntegrationPlatform/PlatformBase.png)
 
 When a connection is established between routers, message traffic flows in both directions across that connection. Each connection has a client side (a connector) and a server side (a listener) for the purposes of connection establishment.
 
@@ -74,7 +76,7 @@ Message routing has a number of properties
 The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but that results in that message order can not be guaranteed.
 
 ## Linked routing
-
+A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints.
 
 # Connecting your application
 
