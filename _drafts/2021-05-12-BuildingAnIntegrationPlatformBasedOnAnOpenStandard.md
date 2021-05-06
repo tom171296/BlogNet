@@ -26,7 +26,7 @@ In short, the way I see this platform is that it has
 - Scalable.
 
 # AMQP
-AMQP 1.0 is open standard approved by ISO and IEC. It is an efficient, reliable wire-level messaging protocol that you can use to build robust, cross-platform, messaging applications. The protocol has a simple goal: to define the mechanics of the secure, reliable, and efficient transfer of messages between two parties. Using an open standard as protocol has the following benefits:
+AMQP 1.0 is an open standard approved by ISO and IEC. It is an efficient, reliable wire-level messaging protocol that you can use to build robust, cross-platform, messaging applications. The protocol has a simple goal: to define the mechanics of the secure, reliable, and efficient transfer of messages between two parties. Using an open standard as protocol has the following benefits:
 
 - Less chance of vendor lock-in
 - Interoperability
@@ -49,11 +49,11 @@ The technology that we are gonna build the platform with is [Apache QPID dispatc
 
 Each environment that should participate in the network needs to run at least two of these routers (for HA capabilities). So lets say we want to build the platform for AWS and Azure, then it would look like this. 
 
-Four routers will form the base of our platform. A router has a few modes where it can run in. The routers we deploy for the base of the platform are in **interior mode**. This mode allows a router to be part of the interior network of the platform. Interior routers establish connections with each other and automatically compute the lowest cost paths across the network. You can have up to 128 interior routers in the router network. Applications that want to connect to the interior network do this via a seperate router. This router is deployed in **edge mode** and can connect to one or more interior routers. An edge router does not participate in the routing protocol of the network and is purely required from message production and consumption.
-
 ![PlatformBase](../assets/images/2021/IntegrationPlatform/PlatformBase.png)
 
-When a connection is established between routers, message traffic flows in both directions across that connection. Each connection has a client side (a connector) and a server side (a listener) for the purposes of connection establishment.
+Four routers will form the base of our platform. A router has a few modes where it can run in. The routers we deploy for the base of the platform are in **interior mode**. This mode allows a router to be part of the interior network of the platform. Interior routers establish connections with each other and automatically compute the lowest cost paths across the network. You can have up to 128 interior routers in the router network. Applications that want to connect to the interior network do this via a seperate router. This router is deployed in **edge mode** and can connect to one or more interior routers. An edge router does not participate in the routing protocol of the network and is purely required from message production and consumption.
+
+When a connection is established between routers, message traffic flows in both directions across that connection. Each connection has a client side (a connector) and a server side (a listener) for the purposes of connection establishment. Connection can be secured using SSL/TLS mutual connection. Beside SSL/TLS authentication it is also possible to enable SASL authentication and authorization based on users.
 
 The QPID-dispatch routers support two types of routing messages. Each type of routing comes with properties that differ from the other type. The two different types of routing are message routing and linked routing.
 
@@ -62,27 +62,28 @@ Message routing enables you to distribute message in anycast and multicast patte
 
 Message send via this pattern are fully handled by the routers. This means that each message that is send is passed from the one router to the next. With each hop, the router that receives the message looks at all the connections that the router has and sees which path is listening to that address. The routers sends it to all the connections that are interested in the current address.
 
-Message routing has a number of properties 
+![PlatformBase](../assets/images/2021/IntegrationPlatform/MessageRouting.png)
 
+Message routing has the following characteristics 
+
+- Dynamic network rerouting and load balancing
+- horizontally scalable
+- high speed, low latency
 - No guaranteed message order
 - At-least-once delivery (needs idempotent subscribers) or at-most-once delivery (message loss possible)
-- No message filtering
-- No wildcard subscription
-- No durable subscriptions
-- **Dynamic network rerouting and load balancing**
-- **horizontally scalable**
-- **high speed, low latency**
+- No broker capabilities like filtering, wildcards or durable subscriptions 
+- Network slows down to the slowest consumer
 
 The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but that results in that message order can not be guaranteed.
 
 ## Linked routing
-A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints. 
+A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints. This type of routing makes the router network completely transparant.
 
-# Connecting your application
-
+![PlatformBase](../assets/images/2021/IntegrationPlatform/LinkRouting.png)
 
 # Whats next
-I know, you guys can not wait to get started with building this platform but it comes with a few challenges. The platform is purely designed for transport of data. Each applications that **SOMETHING WITH KOSI AND APPLCATION REQUIREMENTS**
+I know, you guys can not wait to get started with building this platform but it comes with a few challenges. The platform is purely designed for transport of data. 
 
 
 Uitbreidings mogelijkheden op alle patronen en het platform
+
