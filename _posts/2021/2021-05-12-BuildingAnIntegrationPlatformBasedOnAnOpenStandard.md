@@ -4,7 +4,7 @@ header:
     overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
 tagline: Building a decentralized integration platform based on AMQP 1.0
-published: false
+published: true
 categories: [Integration, Open standard]
 tags: [Apache, QPID dispatch, AMQP 1.0]
 ---
@@ -49,7 +49,7 @@ The technology that we are gonna build the platform with is [Apache QPID dispatc
 
 Each environment that should participate in the network needs to run at least two of these routers (for HA capabilities). So lets say we want to build the platform for AWS and Azure, then it would look like this. 
 
-![PlatformBase](../assets/images/2021/IntegrationPlatform/PlatformBase.png)
+![PlatformBase](../../assets/images/2021/IntegrationPlatform/PlatformBase.png)
 
 Four routers will form the base of our platform. A router has a few modes where it can run in. The routers we deploy for the base of the platform are in **interior mode**. This mode allows a router to be part of the interior network of the platform. Interior routers establish connections with each other and automatically compute the lowest cost paths across the network. You can have up to 128 interior routers in the router network. Applications that want to connect to the interior network do this via a seperate router. This router is deployed in **edge mode** and can connect to one or more interior routers. An edge router does not participate in the routing protocol of the network and is purely required from message production and consumption.
 
@@ -62,7 +62,7 @@ Message routing enables you to distribute message in anycast and multicast patte
 
 Message send via this pattern are fully handled by the routers. This means that each message that is send is passed from the one router to the next. With each hop, the router that receives the message looks at all the connections that the router has and sees which path is listening to that address. The routers sends it to all the connections that are interested in the current address.
 
-![PlatformBase](../assets/images/2021/IntegrationPlatform/MessageRouting.png)
+![PlatformBase](../../assets/images/2021/IntegrationPlatform/MessageRouting.png)
 
 Message routing has the following characteristics: 
 
@@ -81,7 +81,7 @@ A link route represents a private messaging path between a sender and receiver i
 
 Link routing, unlike message routing, creates a private messaging path between sender and receiver in which the router passes the messages between endpoints. You can think of a link route as a virtual connecten or tunnel that travels from a sender, through the network, to a receiver. With this type of routing, the network does not participate in aggregated message distribution. The router simply passes message delivery and settlement between the two endpoints.
 
-![PlatformBase](../assets/images/2021/IntegrationPlatform/LinkRouting.png)
+![PlatformBase](../../assets/images/2021/IntegrationPlatform/LinkRouting.png)
 
 Link routing has the following characteristics:
 
