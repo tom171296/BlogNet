@@ -97,7 +97,7 @@ Link routing has the following characteristics:
 
 Link routing allows subscribers to take advantage of broker capabilities. A link route is not capable of dynamic scaling, because the link is created over a static route and needs to be recreated when one of the routers (over which the link is build) is not available.
 
-# Whats next
+# What's next
 I hope that this blog made clear what the vision of the platform is and how you can build an enterprise integration platform based on the open standard AMQP 1.0. Depending on the use case, you can choose what type of routing suits your application best. 
 
 As said in this blog, every publishing application should publish a message on a certain messaging channel (address). These addresses need to be configured in the router network. My suggestion is that you define a set of address prefixes which define all the different channel configurations that you have created.
