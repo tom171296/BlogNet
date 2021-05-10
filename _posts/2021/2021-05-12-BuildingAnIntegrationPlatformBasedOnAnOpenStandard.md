@@ -96,7 +96,7 @@ Link routing allows subscribers to take advantage of broker capabilities. A link
 # Whats next
 I hope that this blog made clear what the vision of the platform is and how you can build an enterprise integration platform based on the open standard AMQP 1.0. Depending on the use case, you can choose what type of routing suits your application best. 
 
-Because the QPID dispatch routers are based on the open standard AMQP 1.0, it is possible to connect any broker that support that protocol. This means that these routers can interact with cloud native services like [azure service bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-amqp-overview). 
+Because the QPID dispatch routers are based on the open standard AMQP 1.0, it is possible to connect any broker that supports that protocol. This means that these routers can interact with cloud native services like [azure service bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-amqp-overview). 
 
 The network itself doesn't support any store and foreward capabilities which require a broker. The next step in building this platform should be connecting a router to a broker, and let the broker serve as a queue for your application.
 
