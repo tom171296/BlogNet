@@ -1,8 +1,8 @@
 ---
 title: Building an integration platform based on an open standard
 header:    
-    overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
-    teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
+    overlay_image: /assets/images/2021/IntegrationPlaform/blogheader.jpg
+    teaser: /assets/images/2021/IntegrationPlaform/blogheader.jpg
 tagline: Building a decentralized integration platform based on AMQP 1.0
 published: true
 categories: [Integration, Open standard]
