@@ -16,7 +16,7 @@ So when I look at a typical enterprise integration platform, I think of a centra
 
 What if we can build a decentralized platform. There should no longe be a team that is responsible for all the integrations within an enterprise. Integration should no longer be a single team responsibility. Each application team should be responsible for their own integration. This means a shift in the responsibilities. Where a centralized integration platform ususally focusses on OSI-layer 4 (transport) a decentralized platform is moving that responsibilities up to layer 7 (application). This means that each application itself is responsible for their integrations and making sure that they happen the way that they want.
 
-Thus a decentralized platform with which the team can manage integrations with other applications itself. We need to build a platform that should decouple applications as well. he sending application doens't necesarrily know what application ends up retrieving it, but it can be assured that the application that is receiving the information is interested in the information. When an application sends information, it doesn't randomly add the information to any channel available. It adds the information to a channel whose specific purpose is to communicate that sort of information. Channels are logical addresses in the messaging system.
+Thus a decentralized platform with which the team can manage integrations with other applications itself. The platform should decouple applications as well. The sending application doensn't necesarrily needs to know what application ends up receiving the message, but it can be assured that the information is received by everyone who is interested. When an application sends information, it doesn't randomly add the information to any channel available. It adds the information to a channel whose specific purpose is to communicate that sort of information. Channels are logical addresses in the messaging system.
 
 Keeping in mind that in 2021 the amount of data that is being processed by applications is increasing more and more. Data gets a more important place in the IT world. The platform should be scalable to be able to process constantly getting bigger amounts of data. Sending more data over the platform should not result in a slower data flow. The platform should be smart enough to route high volume data in a way that it takes the shortest, less utilized route.
 
@@ -64,7 +64,7 @@ Message send via this pattern are fully handled by the routers. This means that 
 
 ![PlatformBase](../assets/images/2021/IntegrationPlatform/MessageRouting.png)
 
-Message routing has the following characteristics 
+Message routing has the following characteristics: 
 
 - Dynamic network rerouting and load balancing
 - horizontally scalable
@@ -77,13 +77,26 @@ Message routing has the following characteristics
 The main thing with message routing is that routing is done for each message individually. This comes with a lot of scalability benefits but that results in that message order can not be guaranteed.
 
 ## Linked routing
-A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints. This type of routing makes the router network completely transparant.
+A link route represents a private messaging path between a sender and receiver in whicht the router passes the messages between endpoints. Link routing can be used to connect a client to a service (such as a broker queue). 
+
+Link routing, unlike message routing, creates a private messaging path between sender and receiver in which the router passes the messages between endpoints. You can think of a link route as a virtual connecten or tunnel that travels from a sender, through the network, to a receiver. With this type of routing, the network does not participate in aggregated message distribution. The router simply passes message delivery and settlement between the two endpoints.
 
 ![PlatformBase](../assets/images/2021/IntegrationPlatform/LinkRouting.png)
 
+Link routing has the following characteristics:
+
+- Guaranteed message order
+- Exactly-once delivery
+- Broker capabilities like filtering, wildcards and durable subscriptions
+- No dynamic rerouting or load-balancing via the network
+- Disruption of the link requires the subscriber to recreate a link.
+
+Link routing allows subscribers to take advantage of broker capabilities. A link route is not capable of dynamic scaling, because the link is created over a static route and needs to be recreated when one of the routers (over which the link is build) is not available.
+
 # Whats next
-I know, you guys can not wait to get started with building this platform but it comes with a few challenges. The platform is purely designed for transport of data. 
+I hope that this blog made clear what the vision of the platform is and how you can build an enterprise integration platform based on the open standard AMQP 1.0. Depending on the use case, you can choose what type of routing suits your application best. 
 
+Because the QPID dispatch routers are based on the open standard AMQP 1.0, it is possible to connect any broker that support that protocol. This means that these routers can interact with cloud native services like [azure service bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-amqp-overview). 
 
-Uitbreidings mogelijkheden op alle patronen en het platform
+The network itself doesn't support any store and foreward capabilities which require a broker. The next step in building this platform should be connecting a router to a broker, and let the broker serve as a queue for your application.
 
