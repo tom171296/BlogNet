@@ -3,7 +3,7 @@ title: x steps to connect a qpid dispatch router to an azure service bus
 header:    
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: 
-tagline: 
+tagline: Wondering how you can integrate a qpid dispatch router with azure service bus?
 published: true
 categories: [Cloud native, Integration, Open standard]
 tags: [AMQP 1.0, QPID dispatch, Azure, Service bus]
