@@ -22,4 +22,4 @@ Each step that is described will first describe the step in a more generic way, 
 
 Let's get started:
 
-<center><h1>Step 1: creating</center> 
+<center><h1>Step 1: creating</h1></center> 
