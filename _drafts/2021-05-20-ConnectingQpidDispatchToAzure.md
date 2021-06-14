@@ -15,11 +15,6 @@ No problem. I've got you covered! In my blog [building a integration platform ba
 
 In this post, I'll help you to connect a router to an azure service bus in just X steps.
 
-But quick note first:
-
-Each step that is described will first describe the step in a more generic way, so it is applicable for each broker/service that supports AMQP 1.0. At the end of each step, the specific implementation for the azure service bus is described.
-
-
 Let's get started:
 
-<center><h1>step 1: creating</h1></center> 
+<center><h1>Creating</h1></center> 
