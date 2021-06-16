@@ -17,7 +17,7 @@ In this post, I'll help you to connect a router to an azure service bus in just 
 
 Let's get started:
 
-<center><h1>1. Connection to azure</h1></center>
+<h1>1. Connection to azure</h1>
 To connect the router to azure you need to define a `connector` in the routers configuration file. A connector has a three different types of roles.
 
 - `Interior`: used to connect to another interior router;
@@ -30,8 +30,7 @@ Beside the type of connection that we're going to create, we need to define the 
 
 ![alt text](../../assets/images/2021/ConnectQpidToServiceBus/hostLocation.jpg "Vault architecture")
 
-
-
+Combining the steps above will result in the following configuration: 
 
 ```
 connector {
@@ -42,6 +41,8 @@ connector {
 }
 ```
 
+<h1>2. Securing your location</h1>
+
 
 
 
@@ -49,7 +50,6 @@ connector {
 
 
 Steps: 
-- Creating connector to azure
 - SSL connection
 - Idle timeout
 - Sasl
