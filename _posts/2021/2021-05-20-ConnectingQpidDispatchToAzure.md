@@ -41,7 +41,7 @@ connector {
 }
 ```
 
-<h1>2. Securing your location</h1>
+<h1>2. Securing your connection</h1>
 
 
 
