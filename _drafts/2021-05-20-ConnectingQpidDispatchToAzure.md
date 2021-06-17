@@ -1,5 +1,5 @@
 ---
-title: x steps to connect a qpid dispatch router to an azure service bus
+title: 5 steps to connect a qpid dispatch router to an azure service bus
 header:    
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: 
@@ -13,11 +13,11 @@ Wondering how you can integrate a [qpid dispatch router](https://qpid.apache.org
 
 No problem. I've got you covered! In my blog [building a integration platform based on an open standard](https://blognet.tech/2021/BuildingAnIntegrationPlatformBasedOnAnOpenStandard/) I introduced the qpid dispatch router, so I will skip that in this blog.
 
-In this post, I'll help you to connect a router to an azure service bus in just X steps. An example implementation can be found on my [github page]().
+In this post, I'll help you to connect a router to an azure service bus in just 5 steps. An example implementation can be found on my [github page]().
 
 Let's get started:
 
-<h1>1. Connection to azure</h1>
+# 1. Connection to azure
 To connect the router to azure you need to define a `connector` in the routers configuration file. A connector has a three different types of roles.
 
 - `Interior`: used to connect to another interior router;
@@ -41,17 +41,18 @@ connector {
 }
 ```
 
-<h1>2. Securing your connection</h1>
+# 2. Securing your connection
+- azure certificaat
+- Router certificaat
+- SSL profile
 
 
+# 3. Idle timeout
 
+# 4. Azure service bus authentication
 
+# 5. Autolink
 
+# What's next
 
-
-Steps: 
-- SSL connection
-- Idle timeout
-- Sasl
-- Autolink
 
