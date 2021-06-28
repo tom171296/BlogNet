@@ -99,7 +99,7 @@ connector {
     port: amqps 
     sslProfile: azure-service-bus-sslprofile
     verifyHostname: true
-    idleTimeoutSeconds: 10 # Needed!
+    idleTimeoutSeconds: 20 # Needed!
 }
 ```
 
