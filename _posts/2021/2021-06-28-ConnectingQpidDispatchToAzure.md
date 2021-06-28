@@ -4,7 +4,7 @@ header:
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: 
 tagline: Wondering how you can integrate a qpid dispatch router with azure service bus?
-published: false
+published: true
 categories: [Cloud native, Integration, Open standard]
 tags: [AMQP 1.0, QPID dispatch, Azure, Service bus]
 ---
@@ -28,7 +28,7 @@ Because we want to connect to an external AMQP container (Azure service bus) we 
 
 Beside the type of connection that we're going to create, we need to define the host address to which the router needs to create the connection. The host address can be found in the azure service bus in the azure portal.
 
-![alt text](../../assets/images/2021/ConnectQpidToServiceBus/hostLocation.jpg "Host location")
+![host location](../../assets/images/2021/ConnectQpidToServiceBus/hostLocation.jpg "Host location")
 
 Combining the steps above will result in the following configuration: 
 
@@ -50,7 +50,7 @@ There is a script that creates a certificate for the router in the [example proj
 
 To get a trusted CA from azure I went to the hostname address. In my case `blognet.servicebus.windows.net`. The result will look something like this:
 
-![alt text](../../assets/images/2021/ConnectQpidToServiceBus/azurecert.jpg "get cert")
+![get azure cert](../../assets/images/2021/ConnectQpidToServiceBus/azurecert.jpg "get cert")
 
 Export the public CA certificate from azure to an CRT file. Both the certificates are needed by the router to creawte a secure connection. In the example I mapped both certificates into the container using a volume.
 
@@ -111,11 +111,40 @@ If you started your application you will see the following error message:
 
 The next step is using authentication in the router and be able to authenticate against the azure service bus.
 
+At first, we need to add the [cyrus-sasl-plain](https://www.cyrusimap.org/sasl/) packages to the [docker image](https://github.com/tom171296/connect-router-to-azure/blob/main/Dockerfile). This package is used by the router to handle SASL authentication.
 
+In the azure service bus there is a queue/topic to which we want to connect the router. In this topic/queue you need to create a "shared access policy" that is used for sasl authentication. 
 
-# 5. Autolink
+![sas policy image](../../assets/images/2021/ConnectQpidToServiceBus/sasPolicy.jpg "sas policy")
 
-# 6. Link route
+Add a new sas policy and give it the claims that you need.
+
+![Claims](../../assets/images/2021/ConnectQpidToServiceBus/sasPolicy.jpg "sas policy")
+
+After you created the sas policy you need to update the router configuration:
+
+```
+connector {
+    name: azure-service-bus
+    role: route-container
+    host: {YOUR_HOST_NAME}
+    port: amqps #5671 
+    sslProfile: azure-service-bus-sslprofile # Name of the sslProfiel
+    verifyHostname: true
+    idleTimeoutSeconds: 20 
+    saslMechanisms: PLAIN
+    saslUsername: {SAS_POLICY_NAME} 
+    saslPassword: pass:{SAS_POLICY_KEY} 
+}
+```
+- `saslMechanism`: define that we want to use plain authentication.
+- `saslUsername`: the name of the sas policy you just created.
+- `saslPassword`: the primary or secondary key of the policy.
+
+Once you updated your connector and start de docker image you will see that the router is connecting the azure service bus!
+
+# 5. Autolink / Link route
+
 
 # What's next
 
