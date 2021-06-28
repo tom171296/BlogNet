@@ -50,7 +50,7 @@ There is a script that creates a certificate for the router in the [example proj
 
 To get a trusted CA from azure I went to the hostname address. In my case `blognet.servicebus.windows.net`. The result will look something like this:
 
-![alt text](../../assets/images/2021/ConnectQpidToServiceBus/azure-cert.jpg "get cert")
+![alt text](../../assets/images/2021/ConnectQpidToServiceBus/azurecert.jpg "get cert")
 
 Export the public CA certificate from azure to an CRT file. Both the certificates are needed by the router to creawte a secure connection. In the example I mapped both certificates into the container using a volume.
 
