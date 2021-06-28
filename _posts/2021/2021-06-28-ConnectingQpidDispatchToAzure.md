@@ -115,11 +115,11 @@ At first, we need to add the [cyrus-sasl-plain](https://www.cyrusimap.org/sasl/)
 
 In the azure service bus there is a queue/topic to which we want to connect the router. In this topic/queue you need to create a "shared access policy" that is used for sasl authentication. 
 
-![sas policy image](../../assets/images/2021/ConnectQpidToServiceBus/sasPolicy.jpg "sas policy")
+![sas policy image](../../assets/images/2021/ConnectQpidToServiceBus/sasPolicys.jpg "sas policy")
 
 Add a new sas policy and give it the claims that you need.
 
-![Claims](../../assets/images/2021/ConnectQpidToServiceBus/sasPolicy.jpg "sas policy")
+![Claims](../../assets/images/2021/ConnectQpidToServiceBus/addClaims.jpg "sas policy")
 
 After you created the sas policy you need to update the router configuration:
 
