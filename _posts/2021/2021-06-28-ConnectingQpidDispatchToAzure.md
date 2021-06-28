@@ -87,7 +87,21 @@ connector {
 When you followed the steps above, you should be able to connect your router to the azure service bus. If you do so, you will see the following error message: 
  `Idle timeout value specified in connection OPEN ('8000 ms') is not supported. Minimum idle timeout is '10000' ms.`
 
-Azure vraagt om een minimale idle timeout van 10000 ms (10 sec). 
+Azure requires a minimum timeout of 10.000 ms (10 sec). The connector configuration has a property where you can set the idle timeout, `idleTimeoutSeconds`. When you set this property to 10 (sec) you will see the following message: `Idle timeout value specified in connection OPEN ('5000 ms') is not supported. Minimum idle timeout is '10000' ms.`
+
+For some reason the property says `idleTimeoutSeconds` but underwater the value is divided by two for some reason. To get this working we need to set the timeout seconds to 20 at least.
+
+```
+connector {
+    name: azure-service-bus
+    role: route-container
+    host: blognet.servicebus.windows.net
+    port: amqps #5671 
+    sslProfile: azure-service-bus-sslprofile # Name of the sslProfiel
+    verifyHostname: true
+    idleTimeoutSeconds: 10 # Needed!
+}
+```
 
 # 4. Azure service bus authentication
 
