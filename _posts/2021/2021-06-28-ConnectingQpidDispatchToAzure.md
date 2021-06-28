@@ -103,7 +103,11 @@ connector {
 }
 ```
 
+When you start the application, the timeout error will be gone and the first secure amqps connection is created to azure!
+
 # 4. Azure service bus authentication
+If you started your application 
+
 
 # 5. Autolink
 
