@@ -35,9 +35,9 @@ Combining the steps above will result in the following configuration:
 ```
 connector {
     name: azure-servicebus-connector
-    role: route-container //connect to external AMQP container
+    role: route-container # connect to external AMQP container
     host: {Your-hostname-here}
-    port: 5672 // Default AMQP port
+    port: 5672 # Default AMQP port
 }
 ```
 
@@ -77,7 +77,7 @@ connector {
     name: azure-service-bus
     role: route-container
     host: {YOUR_HOST_NAME}
-    port: amqps #5671 
+    port: 5671 # Default AMQPS port
     sslProfile: azure-service-bus-sslprofile # Name of the sslProfile
     verifyHostname: true
 }
@@ -96,8 +96,8 @@ connector {
     name: azure-service-bus
     role: route-container
     host: blognet.servicebus.windows.net
-    port: amqps #5671 
-    sslProfile: azure-service-bus-sslprofile # Name of the sslProfiel
+    port: amqps 
+    sslProfile: azure-service-bus-sslprofile
     verifyHostname: true
     idleTimeoutSeconds: 10 # Needed!
 }
