@@ -84,7 +84,7 @@ connector {
 ```
 
 # 3. Idle timeout
-Wanneer je de bovenstaande stappen hebt doorlopen zou je een eerste verbinding kunnen maken met de azure service bus. Als je dit doet zal je, net als ik had, de volgende foutmelding krijgen: "Idle timeout value specified in connection OPEN ('8000 ms') is not supported. Minimum idle timeout is '10000' ms."
+Wanneer je de bovenstaande stappen hebt doorlopen zou je een eerste verbinding kunnen maken met de azure service bus. Als je dit doet zal je, net als ik had, de volgende foutmelding krijgen: `Idle timeout value specified in connection OPEN ('8000 ms') is not supported. Minimum idle timeout is '10000' ms.`
 
 Azure vraagt om een minimale idle timeout van 10000 ms (10 sec). 
 
