@@ -28,7 +28,7 @@ Because we want to connect to an external AMQP container (Azure service bus) we 
 
 Beside the type of connection that we're going to create, we need to define the host address to which the router needs to create the connection. The host address can be found in the azure service bus in the azure portal.
 
-![alt text](../assets/images/2021/ConnectQpidToServiceBus/hostLocation.jpg "Host location")
+![alt text](../../assets/images/2021/ConnectQpidToServiceBus/hostLocation.jpg "Host location")
 
 Combining the steps above will result in the following configuration: 
 
@@ -50,7 +50,7 @@ There is a script that creates a certificate for the router in the [example proj
 
 To get a trusted CA from azure I went to the hostname address. In my case "blognet.servicebus.windows.net". The result will look something like this:
 
-![alt text](../assets/images/2021/ConnectQpidToServiceBus/azure-cert.jpg "Host location")
+![alt text](../../assets/images/2021/ConnectQpidToServiceBus/azure-cert.jpg "Host location")
 
 Export the public CA certificate from azure to an CRT file. Both the certificates are needed by the router to creawte a secure connection. In the example I mapped both certificates into the container using a volume.
 
