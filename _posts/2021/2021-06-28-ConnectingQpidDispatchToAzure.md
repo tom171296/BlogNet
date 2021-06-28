@@ -106,7 +106,11 @@ connector {
 When you start the application, the timeout error will be gone and the first secure amqps connection is created to azure!
 
 # 4. Azure service bus authentication
-If you started your application 
+If you started your application you will see the following error message: 
+`Auto Link Activation Failed. Unauthorized access. '{some claim}' claim(s) are required to perform this operation.`
+
+The next step is using authentication in the router and be able to authenticate against the azure service bus.
+
 
 
 # 5. Autolink
