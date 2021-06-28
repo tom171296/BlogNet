@@ -85,7 +85,7 @@ connector {
 
 # 3. Idle timeout
 When you followed the steps above, you should be able to connect your router to the azure service bus. If you do so, you will see the following error message: 
- `Idle timeout value specified in connection OPEN ('8000 ms') is not supported. Minimum idle timeout is '10000' ms.`
+ `Idle timeout value specified in connection OPEN ('8000 ms') is not supported. Minimum idle timeout is '10000' ms.` Apparently the default timeout is 8000 ms (8 sec).
 
 Azure requires a minimum timeout of 10.000 ms (10 sec). The connector configuration has a property where you can set the idle timeout, `idleTimeoutSeconds`. When you set this property to 10 (sec) you will see the following message: `Idle timeout value specified in connection OPEN ('5000 ms') is not supported. Minimum idle timeout is '10000' ms.`
 
