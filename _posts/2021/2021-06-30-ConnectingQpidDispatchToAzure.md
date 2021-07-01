@@ -1,5 +1,5 @@
 ---
-title: 5 steps to connect a qpid dispatch router to an azure service bus
+title: Connect a qpid dispatch router to an azure service bus
 header:    
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
