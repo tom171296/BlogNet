@@ -95,7 +95,7 @@ For some reason the property says `idleTimeoutSeconds` but underwater the value 
 connector {
     name: azure-service-bus
     role: route-container
-    host: blognet.servicebus.windows.net
+    host: {YOUR_HOST_NAME}
     port: amqps 
     sslProfile: azure-service-bus-sslprofile
     verifyHostname: true
@@ -129,7 +129,7 @@ connector {
     role: route-container
     host: {YOUR_HOST_NAME}
     port: amqps #5671 
-    sslProfile: azure-service-bus-sslprofile # Name of the sslProfiel
+    sslProfile: azure-service-bus-sslprofile
     verifyHostname: true
     idleTimeoutSeconds: 20 
     saslMechanisms: PLAIN
@@ -159,9 +159,9 @@ autoLink {
     direction: {in/out}
 }
 ```
-`address`: the routernetworks internal address to which this autolink is applicable to.
-`connection`: the name of the connector that is created in step 4.
-`direction`: defines if the autolink is for incoming messages or outgoing messages.
+- `address`: the routernetworks internal address to which this autolink is applicable to.
+- `connection`: the name of the connector that is created in step 4.
+- `direction`: defines if the autolink is for incoming messages or outgoing messages.
 
 An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the service bus is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
 
