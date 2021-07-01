@@ -144,8 +144,79 @@ connector {
 Once you updated your connector and start de docker image you will see that the router is connecting the azure service bus!
 
 # 5. Autolink / Link route
+There are two different types of connection that can be made to the azure service bus:
+- Autolink
+- Linkroute
+
+The qpid documentation can explain what the key difference is between these two types. I will show you how you can create both these connection to an azure serivce bus.
+
+## Autolink
+A default autolink connection needs the following router configuration:
+```
+autoLink {
+    address: pubsub/your/own/address/here    
+    connection: azure-service-bus
+    direction: {in/out}
+}
+```
+`address`: the routernetworks internal address to which this autolink is applicable to.
+`connection`: the name of the connector that is created in step 4.
+`direction`: defines if the autolink is for incoming messages or outgoing messages.
+
+An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the service bus is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
+
+Creating a connection to a **queue** requires an external address where the value is set to the name of the queue. This is needed for incoming message as well as outgoing messages, because a queue always consist of one input and one output.
+
+```
+autoLink {
+    address: pubsub/your/own/address/here    
+    connection: azure-service-bus
+    direction: {in/out}
+    externalAddress: {queue-name}
+}
+```
+
+For a **topic** a different configuration is needed. When you publish a message to a topic, the message is spread along all the different subscriptions. To send a message to a topic, you will need to define the name of the topic as external address:
+
+```
+autoLink {
+    address: pubsub/your/own/address/here    
+    connection: azure-service-bus
+    direction: out
+    externalAddress: {topic-name}
+}
+```
+It is possible to let a router be a subscriber for a topic. This means that the router becomes a consumer of the topic and needs its own subscription. To connect the autolink to a specific subscription, you need the following router configuration:
+
+```
+autoLink {
+    address: pubsub/your/own/address/here    
+    connection: azure-service-bus
+    direction: out
+    externalAddress: {topic-name}/subscriptions/{subscription-name}
+}
+```
+The value of the external address consists of two different variables. The name of the topic followed by the static value "subscriptions" followed by the name of the specific subscription.
+
+## Link route
+Link routing doesn't need a address specific router configuration. The default router configuration for a link route looks like this:
+
+```
+linkRoute {
+    prefix: *
+    connection: azure-service-bus
+    direction: {in/out}
+}
+```
+- `prefix`: the prefix of an address that is handled with this link route. * means everything, you can make it more specific for your use case.
+- `connection`: the name of the connector that is created in step 4.
+- `direction`: defines if the linkroute is for incoming messages or outgoing messages.
+
+The external address configuration is defined in the address to which an application is listening to. In the [example link route application](https://github.com/tom171296/connect-router-to-azure/tree/main/linkroute) you see that the amqp address to which the application is connecting can have the same value as the autolink external address. This means that an linkroute can connect to a queue as well as a topic subscription. 
 
 
 # What's next
 
+So we integrated the qpid dispatch router with an azure service bus in just 5 simple steps. Together with my blog about [building a integration platform based on an open standard](https://blognet.tech/2021/BuildingAnIntegrationPlatformBasedOnAnOpenStandard/) I hope you guys got enough information and inspiration to think outside of the box. 
 
+Centralized integration platforms aren't needed anymore. The teams should be responsible for building integrations and what type of integration pattern is best suited for their use case. With this solution it's even possible to let a team use their own cloud native services for integration!
