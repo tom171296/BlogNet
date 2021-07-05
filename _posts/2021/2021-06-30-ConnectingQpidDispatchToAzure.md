@@ -176,7 +176,7 @@ autoLink {
 }
 ```
 
-For a **topic** a different configuration is needed. When you publish a message to a topic, the message is spread along all the different subscriptions. To send a message to a topic, you will need to define the name of the topic as external address:
+For a **topic**, a different configuration is needed. When you publish a message to a topic, the message is spread along all the different subscriptions. To send a message to a topic, you will need to define the name of the topic as external address:
 
 ```
 autoLink {
@@ -199,7 +199,7 @@ autoLink {
 The value of the external address consists of two different variables. The name of the topic followed by the static value "subscriptions" followed by the name of the specific subscription.
 
 ## Link route
-Link routing doesn't need a address specific router configuration. The default router configuration for a link route looks like this:
+Link routing doesn't need a address specific router configuration. The default router configuration for a link route can look like this:
 
 ```
 linkRoute {
@@ -209,7 +209,7 @@ linkRoute {
 }
 ```
 - `prefix`: the prefix of an address that is handled with this link route. * means everything, you can make it more specific for your use case.
-- `connection`: the name of the connector that is created in step 4.
+- `connection`: the name of the connector.
 - `direction`: defines if the linkroute is for incoming messages or outgoing messages.
 
 The external address configuration is defined in the address to which an application is listening to. In the [example link route application](https://github.com/tom171296/connect-router-to-azure/tree/main/linkroute) you see that the amqp address to which the application is connecting can have the same value as the autolink external address. This means that an linkroute can connect to a queue as well as a topic subscription. 
