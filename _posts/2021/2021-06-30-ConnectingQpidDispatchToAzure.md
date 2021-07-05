@@ -164,7 +164,7 @@ autoLink {
 }
 ```
 - `address`: the routernetworks internal address to which this autolink is applicable to.
-- `connection`: the name of the connector that is created in step 4.
+- `connection`: the name of the connector.
 - `direction`: defines if the autolink is for incoming messages or outgoing messages.
 
 An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the service bus is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
