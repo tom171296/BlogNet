@@ -46,7 +46,7 @@ To create a secure connection between the router and azure, we need to have two 
 - A certificate for the router, which it uses to identify itself.
 - A CA certificate from azure, so the router knows what CA (and certificates signed by that CA) it can trust.
 
-There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the ReadMe (Step 1) to generate a certificate for the router.
+There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the ReadMe (step 1) to generate a certificate for the router.
 
 To get a trusted CA from azure I went to the hostname address. In my case `blognet.servicebus.windows.net`. The result will look something like this:
 
