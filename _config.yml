@@ -60,6 +60,11 @@ plugins:
   - jekyll-include-cache
   - jekyll-seo-tag
 
+image:
+  path: /assets/favicons/android-chrome-192x192.png
+  height: 192
+  width: 192
+
 author:
   name   : "Tom van den Berg"
   avatar : "/assets/images/bio-photo.jpg"

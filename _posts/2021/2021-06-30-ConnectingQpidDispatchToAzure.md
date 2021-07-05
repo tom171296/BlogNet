@@ -15,8 +15,6 @@ tags: [AMQP 1.0, QPID dispatch, Azure, Service bus]
 
 Wondering how you can integrate a [qpid dispatch router](https://qpid.apache.org/components/dispatch-router/index.html) with [azure service bus](https://azure.microsoft.com/nl-nl/services/service-bus/)? But not sure what steps you need to take?
 
-test
-
 No problem. I've got you covered! In my blog [building a integration platform based on an open standard](https://blognet.tech/2021/BuildingAnIntegrationPlatformBasedOnAnOpenStandard/) I introduced the qpid dispatch router, so I will skip that in this blog.
 
 In this post, I'll help you to connect a router to an azure service bus in just 5 steps. An example implementation can be found on my [github page](https://github.com/tom171296/connect-router-to-azure).
