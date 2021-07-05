@@ -1,5 +1,7 @@
 ---
-title: Connect a qpid dispatch router to an azure service bus
+title: Connect a qpid dispatch router to Azure
+image: 
+    path: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
 header:    
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
