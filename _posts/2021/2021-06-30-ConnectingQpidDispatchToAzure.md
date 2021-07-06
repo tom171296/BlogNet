@@ -50,7 +50,7 @@ To create a secure connection between the router and azure, we need to have two 
 - A certificate for the router, which it uses to identify itself.
 - A CA certificate from azure, so the router knows what CA (and certificates signed by that CA) it can trust.
 
-There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the ReadMe (step 1) to generate a certificate for the router.
+There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the readme (step 1) to generate a certificate for the router.
 
 To get a trusted CA from azure I went to the hostname address. In my case `blognet.servicebus.windows.net`. The result will look something like this:
 
@@ -167,7 +167,7 @@ autoLink {
 - `connection`: the name of the connector.
 - `direction`: defines if the autolink is for incoming messages or outgoing messages.
 
-An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the service bus is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
+An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the router network is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
 
 Creating a connection to a **queue** requires an external address where the value is set to the name of the queue. This is needed for incoming message as well as outgoing messages, because a queue always consist of one input and one output.
 
