@@ -102,7 +102,7 @@ I hope that this blog made clear what the vision of the platform is and how you 
 
 As said in this blog, every publishing application should publish a message on a certain messaging channel (address). These addresses need to be configured in the router network. My suggestion is that you define a set of address prefixes which define all the different channel configurations that you have created.
 
-Because the QPID dispatch routers are based on the open standard AMQP 1.0, it is possible to connect any broker that supports the protocol. This means that these routers can interact with cloud native services like [Azure service bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-amqp-overview). 
+Because the QPID dispatch routers are based on the open standard AMQP 1.0, it is possible to connect any broker that supports the protocol. This means that these routers can interact with cloud native services like [Azure service bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-amqp-overview). If you want to know more about how you can implement this idea with azure native stuff, read my blog about [connecting a router to an azure service bus](https://blognet.tech/2021/ConnectingQpidDispatchToAzure/).
 
 The network itself doesn't support any store and foreward capabilities which require a broker. The next step in building this platform should be connecting a router to a broker, and let the broker serve as a queue for your application.
 
