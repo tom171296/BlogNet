@@ -22,7 +22,7 @@ github_username: tom172196
 minimal_mistakes_skin: default
 search: true
 
-url: "www.blognet.tech"
+url: "https://blognet.tech"
 
 # Build settings
 markdown: kramdown
@@ -32,8 +32,6 @@ permalink: /:year/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 # timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
-google_analytics: G-M2D7MN196B
 
 include:
   - _pages
@@ -58,12 +56,18 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+  - jekyll-seo-tag
+
+image:
+  path: /assets/images/2021/IntegrationPlatfom/blogheader.jpg
+  height: 192
+  width: 192
 
 author:
   name   : "Tom van den Berg"
   avatar : "/assets/images/bio-photo.jpg"
   bio    : "I'm a software engineer at Info Support in the Netherlands. 
-  I write blogs about topics that I think are interesting and are very needed in the current world of software development."
+  I write blogs about software development, architecture and other cool stuff."
   links:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin-in"

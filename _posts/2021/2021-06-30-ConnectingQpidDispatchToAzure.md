@@ -1,5 +1,9 @@
 ---
-title: Connect a qpid dispatch router to an azure service bus
+title: Connect a qpid dispatch router to Azure
+image: 
+    path: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
+    height: 100
+    width: 100
 header:    
     overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
@@ -46,7 +50,7 @@ To create a secure connection between the router and azure, we need to have two 
 - A certificate for the router, which it uses to identify itself.
 - A CA certificate from azure, so the router knows what CA (and certificates signed by that CA) it can trust.
 
-There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the ReadMe (Step x) to generate a certificate for the router.
+There is a script that creates a certificate for the router in the [example project](https://github.com/tom171296/connect-router-to-azure/tree/main/certificates) that I created on github. Follow the readme (step 1) to generate a certificate for the router.
 
 To get a trusted CA from azure I went to the hostname address. In my case `blognet.servicebus.windows.net`. The result will look something like this:
 
@@ -160,10 +164,10 @@ autoLink {
 }
 ```
 - `address`: the routernetworks internal address to which this autolink is applicable to.
-- `connection`: the name of the connector that is created in step 4.
+- `connection`: the name of the connector.
 - `direction`: defines if the autolink is for incoming messages or outgoing messages.
 
-An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the service bus is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
+An autolink connection can be made to the two different entities that a service bus offers. Most of the time the address in the router network is different from the address that is used in the service bus. To connect the internal router address to an external service bus address, you need to define an external address in the autolink.
 
 Creating a connection to a **queue** requires an external address where the value is set to the name of the queue. This is needed for incoming message as well as outgoing messages, because a queue always consist of one input and one output.
 
@@ -176,7 +180,7 @@ autoLink {
 }
 ```
 
-For a **topic** a different configuration is needed. When you publish a message to a topic, the message is spread along all the different subscriptions. To send a message to a topic, you will need to define the name of the topic as external address:
+For a **topic**, a different configuration is needed. When you publish a message to a topic, the message is spread along all the different subscriptions. To send a message to a topic, you will need to define the name of the topic as external address:
 
 ```
 autoLink {
@@ -199,7 +203,7 @@ autoLink {
 The value of the external address consists of two different variables. The name of the topic followed by the static value "subscriptions" followed by the name of the specific subscription.
 
 ## Link route
-Link routing doesn't need a address specific router configuration. The default router configuration for a link route looks like this:
+Link routing doesn't need a address specific router configuration. The default router configuration for a link route can look like this:
 
 ```
 linkRoute {
@@ -209,7 +213,7 @@ linkRoute {
 }
 ```
 - `prefix`: the prefix of an address that is handled with this link route. * means everything, you can make it more specific for your use case.
-- `connection`: the name of the connector that is created in step 4.
+- `connection`: the name of the connector.
 - `direction`: defines if the linkroute is for incoming messages or outgoing messages.
 
 The external address configuration is defined in the address to which an application is listening to. In the [example link route application](https://github.com/tom171296/connect-router-to-azure/tree/main/linkroute) you see that the amqp address to which the application is connecting can have the same value as the autolink external address. This means that an linkroute can connect to a queue as well as a topic subscription. 
