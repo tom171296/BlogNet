@@ -26,19 +26,22 @@ The current world of software development is demanding more and more speed each 
 
 Building and releasing software faster should not result in more bugs in the software, because there is nothing as irritating for a customer as a not working product. If a customer notices and suffers under a lot of bugs, he will not be happy and might go to the competition. That is why we still need to have a process that ensures that our software is working as expected.
 
-// TODO: 
-write stuff about that with the current status quo development pipeline speeding up isn't possible any more but the whole cloud paradigm does.
+The current status quo of software development in many organizations is organised according to the ways we have always done it. This design originates from the time that software ran on self ...... This design doesn't allow you to make full use of the possibilities that the cloud offers.
 
-----------
-
+Making full use of the cloud opens many doors for you and your organization. In my eyes the next step in software development is getting rid of your test and acceptance environment and start **testing your software in production!**
 
 # Testing in production
-// What do I mean with testing in production
+If you read this than I haven't scared you with the crazy idea of testing software in production (TIP)! I will explain why and what I mean with this because it isn't as radical as you might think.
+
+TIP is a software development practice in which new code changes are tested on live user traffic rather than in a staging environment. It is one of the testing practices found in continous delivery. This means that new features are deployed on the production environment without first deploying it to a staging or any other environment. 
+
+
 
 # Break up letter
 // Describe the benefits of testing in production by a break up letter
 
 # Production testing & challenges
 // How does production testing looks like
+// Required maturity of deployment capabilities
 
 // What are challenges that you need to overcome
