@@ -33,15 +33,31 @@ Making full use of the cloud opens many doors for you and your organization. In 
 # Testing in production
 If you read this than I haven't scared you with the crazy idea of testing software in production (TIP)! I will explain why and what I mean with this because it isn't as radical as you might think.
 
-TIP is a software development practice in which new code changes are tested on live user traffic rather than in a staging environment. It is one of the testing practices found in continous delivery. This means that new features are deployed on the production environment without first deploying it to a staging or any other environment. 
+TIP is a software development practice in which new code changes are tested on live user traffic rather than in a staging environment. It is one of the testing practices found in continous delivery. This means that new features are deployed on the production environment without first deploying it to a staging or any other environment.
 
+As a team or organization you should strive for TIP to take the next step in software development, because:
+-  Using TIP will **increase the quality** of your software. You have to be sure that your software works before releasing it and TIP will help you to make sure that the software works in production. 
+- Deploying software immediatly to production will **increase the speed** of your process. No more staging environments where acceptance testing is done but immediatly delivery and feedback from the people who are actually gonna work with your product. 
+- It will also **decrease your costs**. The initial investment of setting up for TIP is more expensive than sticking to the status quo. But on the long term TIP will decrease your costs because you no longer have different environments that you have to host and perform operations on.
 
+In short, every organization that wants to take the next step in software quality management should adopt TIP and break up with their 'old' staging environment.
 
 # Break up letter
-// Describe the benefits of testing in production by a break up letter
+Dear staging, I want to break up with you. It's not me, it's you. 
+
+## You're expensive
+// Not just having you but maintaining you is expensive. All licenses, updates and hosting costs are double and not worth the money
+
+## I can test better
+// If your software works on the staging environment doesn't mean that it will work on the production environment. There are always differences like configuration.
+
+## You're not production
+// Nobody cares if a staging environment doesn't work. Will fix it when we need it
 
 # Production testing & challenges
 // How does production testing looks like
 // Required maturity of deployment capabilities
 
 // What are challenges that you need to overcome
+
+# Summary
