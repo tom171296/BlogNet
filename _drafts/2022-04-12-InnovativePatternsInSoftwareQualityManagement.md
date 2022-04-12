@@ -24,11 +24,9 @@ This process is developed in the years in which we ran our software on physical 
 # Need for speed
 The current world of software development is demanding more and more speed each day. As a company you have to be able to deliver software faster than the competition. Building software faster will result in getting keeping customers satisfied and attracting new customers. That means more income. 
 
-Building and releasing software faster should not result in more bugs in the software, because there is nothing more irritating for a customer as a not working product. If a customer notices and suffers under a lot of bugs, he will not be happy and might go to the competition. That is why we still need to have a process that ensures that our software is working as expected.
+Building and releasing software faster should not result in more bugs in the software, because there is nothing more irritating for a customer as a not working product. If a customer notices and suffers under a lot of bugs, he will not be happy and might go to the competition. That is why we still need to have a process that ensures that our software is working as expected. 
 
-The current status quo of software development in many organizations is organised according to the ways we have always done it. This design originates from the time that software ran on self ...... This design doesn't allow you to make full use of the possibilities that the cloud offers.
-
-Making full use of the cloud opens many doors for you and your organization. In my eyes the next step in software development is getting rid of your test and acceptance environment and start **testing your software in production!**
+Many organisations do not use the possibilities offered by the cloud to speed up this process. Making full use of the cloud opens many doors for you and your organization. In my eyes the next step in software development is getting rid of your test and acceptance environment and start **testing your software in production!**. In this blog and the rest of the serie I will introduce you in all the posibilities that the cloud offers.
 
 # Testing in production
 If you read this than I haven't scared you with the crazy idea of testing software in production (TIP), great! I will explain why and what I mean with this because it isn't as radical as you might think.
@@ -67,10 +65,9 @@ Like described above, no one cares if your staging environment has some errors o
 Maybe it's for the best if you just leave.
 
 # Production testing & challenges
-// How does production testing looks like
-// Required maturity of deployment capabilities
+I hope that you got as much excited about TIP as I am. But before you get started you should realize that adopting TIP isn't a easy proces. It's a continous delivery pattern that allows you to ship new features as fast as possible but it requires a certain level of maturity from your development team(s).
 
-I hope that you got as much excited about TIP as I am. But before you get started you should realize that adopting TIP isn't a easy proces.
+
 
 // What are challenges that you need to overcome
 
