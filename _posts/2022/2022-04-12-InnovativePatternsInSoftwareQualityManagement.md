@@ -3,7 +3,7 @@ title: Innovative patterns in software quality management
 header:    
     overlay_image: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
     teaser: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
-tagline: This is the first blog in a series of blogs about innovative patterns in software quality management
+tagline: Setting the next step in software quality management
 published: true
 categories: [Software development, CI/CD, Software quality management]
 tags: [Production testing, Software development pipeline]
@@ -70,7 +70,7 @@ I hope that you got as much excited about TIP as I am. But before you get starte
 Testing your software in the production environment comes with a lot of challenges. These challenges are normally mitigated because you do your acceptance testing in the staging environment. Some of these challenges are:
 - Manage your test data. You don't want to pollute your production data with testing data.
 - How do you make sure your customers/users do not suffer from your testing?
-- Does your functionality actually lend itself for TIP;
+- Does your functionality actually lend itself for TIP?
 
 Each next blog will touch some part of the software development pipeline where I tell you about the challenges that you will face and how you can solve them. This solutions will meanly be described and implemented using Microsoft's Azure cloud services.
 
