@@ -4,7 +4,7 @@ header:
     overlay_image: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
     teaser: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
 tagline: This is the first blog in a series of blogs about innovative patterns in software quality management
-published: false
+published: true
 categories: [Software development, CI/CD, Software quality management]
 tags: [Production testing, Software development pipeline]
 ---
