@@ -1,8 +1,8 @@
 ---
 title: Innovative patterns in software quality management
 header:    
-    overlay_image: 
-    teaser: 
+    overlay_image: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
+    teaser: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
 tagline: This is the first blog in a series of blogs about innovative patterns in software quality management
 published: false
 categories: [Software development, CI/CD, Software quality management]
@@ -11,7 +11,7 @@ tags: [Production testing, Software development pipeline]
 
 This is the first blog in a series about innovative patterns in software quality management. In this blog I will give you an introduction into testing software in production. Each next blog will zoom in into a specific part of the software development pipeline that touched by the idea of testing software in production.
 
-The software development pipeline tradionally follows a status quo. This status quo consists of the following steps:
+The software development pipeline tradionally consists of the following steps:
 - Building/running tests via a CI/CD pipeline;
 - Deploying your software to a test environment;
 - Testing your software;
@@ -19,7 +19,7 @@ The software development pipeline tradionally follows a status quo. This status 
 - Doing acceptance testing;
 - Deploying and releasing your software to production.
 
-This process is developed in the years in which we ran our software on physical machines. There we had to be sure that our software worked as expected before we deployed it to the next stage. This process usually took a lot of time and effort. That is why older projects usually have a long time between different releases. 
+This process is developed in the years in which we ran our software on physical machines. There we had to be sure that our software worked as expected before we deployed it to the next stage. This process usually took a lot of time and effort.
 
 # Need for speed
 The current world of software development is demanding more and more speed each day. As a company you have to be able to deliver software faster than the competition. Building software faster will result in getting keeping customers satisfied and attracting new customers. That means more income. 
@@ -36,7 +36,7 @@ TIP is a software development practice in which new code changes are tested on l
 As a team or organization you should strive for TIP to take the next step in software development, because:
 -  Using TIP will **increase the quality** of your software. You have to be sure that your software works before releasing it and TIP will help you to make sure that the software works in production. 
 - Deploying software immediatly to production will **increase the speed** of your process. No more staging environments where acceptance testing is done but immediatly delivery and feedback from the people who are actually gonna work with your product. 
-- It will also **decrease your costs**. The initial investment of setting up for TIP is more expensive than sticking to the status quo. But on the long term TIP will decrease your costs because you no longer have different environments that you have to host and perform operations on.
+- It will **decrease your costs**. The initial investment of setting up for TIP is more expensive than sticking to the status quo. But on the long term TIP will decrease your costs because you no longer have different environments that you have to host and perform operations on.
 
 In short, every organization that wants to take the next step in software quality management should adopt TIP and break up with their 'old' staging environment.
 
@@ -67,8 +67,13 @@ Maybe it's for the best if you just leave.
 # Production testing & challenges
 I hope that you got as much excited about TIP as I am. But before you get started you should realize that adopting TIP isn't a easy proces. It's a continous delivery pattern that allows you to ship new features as fast as possible but it requires a certain level of maturity from your development team(s).
 
+Testing your software in the production environment comes with a lot of challenges. These challenges are normally mitigated because you do your acceptance testing in the staging environment. Some of these challenges are:
+- Manage your test data. You don't want to pollute your production data with testing data.
+- How do you make sure your customers/users do not suffer from your testing?
+- Does your functionality actually lend itself for TIP;
 
-
-// What are challenges that you need to overcome
+Each next blog will touch some part of the software development pipeline where I tell you about the challenges that you will face and how you can solve them. This solutions will meanly be described and implemented using Microsoft's Azure cloud services.
 
 # Summary
+Testing in production is a software development practice that allows you to test your software in production. It is a continous delivery practice that allows you to ship new features as fast as possible but it requires a certain level of maturity from your development team(s). 
+In this blogserie I will introduce you to the different stages of the software development pipeline and the challenges that you need to overcome to take the next step in software quality management.
