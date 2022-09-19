@@ -9,7 +9,7 @@ categories: [Software development, CI/CD, Software quality management]
 tags: [Production testing, Software development pipeline]
 ---
 
-This is the first blog in a series about innovative patterns in software quality management. In this blog I will give you an introduction into testing software in production. Each next blog will zoom in into a specific part of the software development pipeline that touched by the idea of testing software in production.
+*This is the first blog in a series about innovative patterns in software quality management. In this blog I will give you an introduction into testing software in production. Each next blog will zoom in into a specific part of the software development pipeline that touched by the idea of testing software in production.*
 
 The software development pipeline tradionally consists of the following steps:
 - Building/running tests via a CI/CD pipeline;
