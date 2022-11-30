@@ -13,13 +13,10 @@ tags: []
 
 Software demands changes faster and faster every day. In traditional teams where there is a dedicated tester, the quality assurance (QA) is mostly done by hand. Think about Regression tests, smoke tests and other types of tests to check if the new changes don't break your application. This slows down the release pipeline for new changes and is very error prone. As a team you want to be able to release as fast as possible to get fast feedback on your product and the new changes. This can be achieved by building a good basis of automated tests that verifies the working of the system.
 
-// INTRO INTO AUTOMATED TESTS
-
-
 // DIFFERENT TYPES OF TESTING (TEST PYRAMID)
 
-// TDD vs BDD
+// The unit in unit test
 
-// Other types of tests
+// 
 
 // Conclusion
