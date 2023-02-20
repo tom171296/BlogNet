@@ -46,16 +46,19 @@ If all the test results are meeting the requirements than there is no issue. But
 
 
 
+- Azure load testing
+
 ### Chaos
 
 A second challenge are the reliability and scalability tests. For on premise environments, reliability and scalability are usually tested using simulated 'chaos'. This is usually done in a controlled environment where the chaos is also happening in a controlled way. Which means that the all that is occurring will be prepared and all the measure to fail over or survive the chaos are already in place.
 
-The thing with controlled chaos is that you already know what is gonna happen 
+The thing with controlled chaos is that you already know what is gonna happen and you are prepared to solve the chaos that is happening. This isn't a realistic scenario, because chaos never happens in a controlled way. For me, testing your reliability and scalability means creating real chaos and seeing how the system reacts to that. 
 
 - Architecture chaos tests? usually simulated errors
-- Integrating load test and chaos
 - Usually taking a lot of time
 - forgotten when architecture / code changes
+
+- Azure Chaos Studio (preview)
 
 
 
