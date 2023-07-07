@@ -1,7 +1,38 @@
 ---
-# You don't need to edit this file, it's empty on purpose.
-# Edit theme's home layout instead if you wanna make some changes
-# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-layout: home
-author_profile: true
+title: "![](/assets/images/header.svg)"
+layout: splash
+header:
+  overlay_color: "#373737"
+  overlay_filter: "0.8"
+  overlay_image: "/assets/images/header.svg"
+  caption: "Some caption here"
+excerpt: ' .NET Tech Lead | C# | Full Stack Dev |  Speaker | Trainer | Event Sourcing | DDD | TDD | Clean Code<br/>
+ <br /> 
+
+[<i class="fab fa-twitter"/> Twitter](https://twitter.com/ddoomen){: .btn .btn--twitter} 
+[<i class="fab fa-linkedin"/> LinkedIN](https://www.linkedin.com/in/dennisdoomen/){: .btn .btn--linkedin} 
+[<img src="/assets/images/sessionize-avatar.svg" style="vertical-align: baseline; max-height: 11px"/> Sessionize](https://sessionize.com/dennis-doomen/){: .btn .btn--sessionize} 
+[<img src="/assets/images/fluentassertions.png" style="vertical-align: baseline; max-height: 13px" /> Fluent Assertions](https://www.fluentassertions.com/){: .btn .btn--fluentassertions} 
+[<i class="fab fa-github"></i> Github Sponsors](https://github.com/sponsors/dennisdoomen){: .btn .btn--github}
+
+'
 ---
+
+<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+
+{% for post in paginator.posts %}
+  {% include archive-single.html type=grid %}
+{% endfor %}
+
+<!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+    style="display:block; text-align:center;"
+    data-ad-layout="in-article"
+    data-ad-format="fluid"
+    data-ad-client="ca-pub-2541295231849242"
+    data-ad-slot="3474725013"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>  -->
+
+{% include paginator.html %}
