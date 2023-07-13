@@ -1,7 +1,6 @@
 ---
 title: Secret management with Hashicorp Vault
 header:    
-    overlay_image: /assets/images/2021/HashicorpVault/blogheader.jpg
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
 tagline: This blog will give an introduction into secretmanagement using Hashicorp Vault
 published: true

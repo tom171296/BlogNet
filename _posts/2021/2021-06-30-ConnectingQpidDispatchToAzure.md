@@ -5,7 +5,6 @@ image:
     height: 100
     width: 100
 header:    
-    overlay_image: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
     teaser: /assets/images/2021/ConnectQpidToServiceBus/blogheader.jpg
 tagline: Wondering how you can integrate a qpid dispatch router with azure service bus?
 published: true

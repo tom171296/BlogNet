@@ -1,7 +1,6 @@
 ---
 title: Building an integration platform based on an open standard
 header:    
-    overlay_image: /assets/images/2021/IntegrationPlatform/blogheader.jpg
     teaser: /assets/images/2021/IntegrationPlatform/blogheader.jpg
 tagline: Building a decentralized integration platform based on AMQP 1.0
 published: true
