@@ -1,7 +1,6 @@
 ---
 title: Innovative patterns in software quality management
 header:    
-    overlay_image: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
     teaser: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
 tagline: Setting the next step in software quality management
 published: true
