@@ -2,9 +2,8 @@
 title: Innovative patterns in software quality management
 header:    
     teaser: /assets/images/2022/InnovativePatternsInSoftwareQualityManagement/blogheader.png
-tagline: Setting the next step in software quality management
 published: true
-categories: [Software development, CI/CD, Software quality management]
+excerpt: Test 1234
 tags: [Production testing, Software development pipeline]
 ---
 
