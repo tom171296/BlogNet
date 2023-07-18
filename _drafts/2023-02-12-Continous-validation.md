@@ -76,7 +76,7 @@ Continuous validation is integrating the validation of your NFR's into your CI/C
 
 - When should you run it
 - Example pipeline
-- 
+- Cost
 
 ## Conclusion
 
