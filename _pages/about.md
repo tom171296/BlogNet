@@ -1,4 +1,4 @@
----
+<!-- ---
 
 title: "About me"
 layout: single
@@ -14,4 +14,4 @@ My toolbelt includes principles like Unit Testing, Test Driven Development, Doma
 
 Next to that, I run on-demand (mini-)audits on (agile) architecture, development methods and anything that should make our client's development teams more efficient, mature and professional. And within Aviva, I drive the Custom Development community and mentor new joiners. 
 
-I also maintain several open-source projects, amongst which the popular assertion framework Fluent Assertions, and I share my experiences as an internal speaker and blogger. Because of my contribution to the community, in 2023, Microsoft awarded me with the Most Valuable Professional (MVP) in the Developer Technologies area.
+I also maintain several open-source projects, amongst which the popular assertion framework Fluent Assertions, and I share my experiences as an internal speaker and blogger. Because of my contribution to the community, in 2023, Microsoft awarded me with the Most Valuable Professional (MVP) in the Developer Technologies area. -->
