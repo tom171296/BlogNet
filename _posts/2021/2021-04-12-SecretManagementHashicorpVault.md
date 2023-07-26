@@ -2,7 +2,7 @@
 title: Secret management with Hashicorp Vault
 header:    
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
-tagline: This blog will give an introduction into secretmanagement using Hashicorp Vault
+excerpt: Controling your secrets with Hashicorp Vault to make your application more secure.
 published: true
 categories: [Security, Secret management]
 tags: [Hashicorp, Vault]

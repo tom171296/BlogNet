@@ -47,10 +47,8 @@
   (google-plus, $google-plus-color),
   (linkedin, $linkedin-color),
   (sessionize, $sessionize-color),
-  (aviva, #333),
-  (kofi, #0070ba),
-  (fluentassertions, #fff),
-  (mastodon, #595aff);
+  (infosupport, #333),
+  (kofi, #0070ba);
 
   @each $buttoncolor, $color in $buttoncolors {
     &--#{$buttoncolor} {
