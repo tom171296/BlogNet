@@ -1,11 +1,9 @@
 ---
 title: Continuous validation
 header:    
-    overlay_image: 
     teaser: Getting grip on your non-functional requirements using the power of Azure
-tagline: 
+excerpt: Verifying the non-functionals of your mission-critical sysem
 published: false
-categories: []
 tags: []
 ---
 
