@@ -1,5 +1,5 @@
 main:
-  - title: "Posts"
-    url: /posts/
-  - title: "Categories"
-    url: /categories/
+  - title: "About me"
+    url: /about/
+  - title: "Crafted Specially"
+    url: https://github.com/tom171296/CraftedSpecially
