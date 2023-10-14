@@ -4,7 +4,6 @@ header:
     teaser: /assets/images/2021/IntegrationPlatform/blogheader.jpg
 excerpt: Building a decentralized integration platform based on AMQP 1.0
 published: true
-categories: [Integration, Open standard]
 tags: [Apache, QPID dispatch, AMQP 1.0]
 ---
 

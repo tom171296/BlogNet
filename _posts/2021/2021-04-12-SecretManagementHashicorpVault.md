@@ -4,7 +4,6 @@ header:
     teaser: /assets/images/2021/HashicorpVault/blogheader.jpg
 excerpt: Controling your secrets with Hashicorp Vault to make your application more secure.
 published: true
-categories: [Security, Secret management]
 tags: [Hashicorp, Vault]
 ---
 

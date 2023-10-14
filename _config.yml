@@ -48,9 +48,9 @@ round-avatar: true
 social-network-links:
   email: "tom.vandenberg@infosupport.com"
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  github: tom172196
+  github: tom171296
   twitter: TomB_171296
-  youtube: c/daattali
+  youtube: channel/UCOnF6sF0nMlRfw1BFG4JwQg
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
