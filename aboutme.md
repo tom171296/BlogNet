@@ -13,3 +13,4 @@ As a Lead Engineer, I get a kick out of crafting mission-critical applications t
 But it's not just about me – I love sharing the tech excitement. I'm also a public speaker who enjoys connecting with fellow tech enthusiasts. Through blogs and talks, I'm here to break down the geek-speak. We'll dive into C#, get cozy with CI/CD, unravel mission-critical mysteries, and explore the cloud galaxy – especially Azure.
 
 So, join me in this tech adventure! We'll explore, learn, and have a blast together. From nifty C# tricks to mastering the art of CI/CD and discovering the endless possibilities in the cloud, it's going to be a tech-tastic journey. Stick around for some fun tech insights, discussions, and aha moments!
+
