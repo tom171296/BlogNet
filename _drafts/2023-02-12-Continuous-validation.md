@@ -7,11 +7,11 @@ published: false
 tags: []
 ---
 
-*Some short introduction*
+In today's business world, moving mission-critical applications to the cloud is a necessity, offering scalability and cost-efficiency. However, this shift relinquishes control over infrastructure, raising the crucial question of maintaining reliability and availability.
 
-As a software engineer I see a lot of project that have the focus on creating business functionality. A business functionality doesn't only consist of the functional requirements that we have to implement as software engineers. There is always a form of non-functional requirements that are as (if not more) important as the functional requirements, but are not treated that way.
+As cloud-native applications grow in complexity, the need for rigorous testing becomes evident. Outages often result from failed deployments or erroneous releases. Moreover, post-deployment issues can plague complex, multi-tenant cloud environments. These challenges call for resiliency measures like retry logic and autoscaling, often overlooked during development.
 
-Even if the functional requirements are all implemented perfectly, a software system can completely fail if the non-functional requirements like performance and availability are not met. This means that every time your architecture or code changes, you should verify that **all of your requirements** are still met. The process of continuously checking your non-functional requirements is called **continuous validation**.
+In this blog, we'll explore the importance of verifying and testing cloud reliability for mission-critical applications, focusing on strategies to ensure uninterrupted service, even in complex, dynamic cloud environments.
 
 ##  Understanding non-functional requirements
 
@@ -19,7 +19,7 @@ Non-functional requirements (NFR's) define 'how' systems do what they do. This i
 
 Dealing with NFR's may seem like you're adding to your project's scope. However, NFR's are just as critical as functional epics, features and stories. They ensure the usability and the effectiveness of the entire system. Failing to meet any one of them can result in systems that fail to satisfy internal business, user or market needs. In some cases, non-compliance can cause significant legal issues (privacy, security, to name a few). 
 
-Proper definition of NFR's is critical. Over-specify them and the solution may be too costly to be viable; under-specify or underachieve them, and the system will be inadequate for its intended use. 
+Proper definition of NFR's is critical. Over-specify them and the solution may be too costly to be viable; under-specify or underachieve them, and the system will be inadequate for its intended use.
 
 In the context of continuous validation we'll focus on:
 
