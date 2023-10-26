@@ -1,5 +1,5 @@
 ---
-title: Mission-Critical Magic - Ensuring Availability and Resilience in Cloud-Native Adventures
+title: Continuous validation - Ensuring Availability and Resilience in Cloud-Native Adventures
 header:    
     teaser: Embark on an Exciting Journey to Master Mission-Critical Success in the Cloud. Discover the Secrets of Availability and Resilience!
 excerpt: Embark on an Exciting Journey to Master Mission-Critical Success in the Cloud. Discover the Secrets of Availability and Resilience!
