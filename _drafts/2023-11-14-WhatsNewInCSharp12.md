@@ -103,7 +103,6 @@ public class Person(string fullname) // Casing doesn't have to match
 }
 ```
 
-
 ### Primary constructors
 
 In conclusion, primary constructors in C# offer a concise and consistent way to declare constructors for classes and structs, reducing boilerplate code and making the syntax more streamlined. By providing a shorthand notation for constructor parameters directly in the class or struct declaration, they enhance code readability and maintainability.
@@ -114,6 +113,57 @@ While primary constructors are advantageous for scenarios such as dependency inj
 
 In summary, primary constructors provide a valuable tool for certain use cases by simplifying the syntax and reducing redundancy, but developers should carefully consider their application, especially when dealing with more intricate object creation scenarios.
 
-### Collection expressions
+## Collection expressions
+In the dynamic landscape of C# programming, the ubiquity of collection-like values is unquestionable. These values are fundamental for data storage and exchange between components. However, the current state of affairs presents a challenge: the creation of such values involves a myriad of verbose approaches.
 
-### Optional parameters in lambda expressions
+- **Arrays**: Initialization requires either `new Type[]` or `new[]`, introducing unnecessary verbosity.
+- **Spans**: Complex constructs, including `stackalloc`, complicate the creation of spans.
+- **Collection Initializers**: Syntax like `new List<T>` lacks type inference and may lead to inefficient memory reallocations.
+- **Immutable Collections**: Initializing immutable collections, such as `ImmutableArray.Create(...)`, can result in unnecessary allocations and data copying.
+
+With the introduction of collection expressions, C# 12 aims to address these issues by providing a concise and consistent syntax for the creation of collection-like values.
+
+```csharp
+int[] cSharp12 = [ 1, 2, 3, 4, 5 ]; // Collection expression
+```
+
+### Behavior
+A collection expression is a concise syntax that, when evaluated, can be assigned to many different collection types. A collection expression contains a sequence of elements between `[` and `]` brackets.
+
+Using a collection expression comes with a few rules. For example the use of the `var` keyword is no longer possible. That is because it is impossible to determine the target type when evaluating the collection expression.
+
+```csharp
+var test = [1, 2, 3, 4, 5]; // Error
+int[] test = [1, 2, 3, 4, 5]; // Correct use of collection expression
+```
+
+### Spread operator
+The spread operator `..` in a collection expression replaces its argument with the elements from that collection. The argument must be a collection type. What is good to know that the spread operator doesn't place a reference to the collection in the target collection but it places the elements of the collection in the target collection. This means that when you change the source collection, the target collection doesn't change.
+```csharp
+int[] row0 = [1, 2, 3];
+int[] row1 = [4, 5, 6];
+int[] row2 = [7, 8, 9];
+int[] single = [..row0, ..row1, ..row2];
+```
+
+### Collection expressions
+The introduction of collection expressions in C# 12 marks a significant stride in simplifying the creation of collection-like values. Addressing the verbosity associated with arrays, spans, collection initializers, and immutable collections, this feature offers a concise and consistent syntax.
+
+The use cases for collection expressions showcase their versatility:
+- Initialize Private Field: `private int[] _numbers = [ 1, 2, 3, 4, 5 ];`
+- Property with Expression Body: `public int[] Numbers => [ 1, 2, 3, 4, 5 ];`
+- As an input parameter: `int sum = Sum([1, 2, 3, 4, 5]);`
+
+These examples illustrate how collection expressions streamline various scenarios, from private field initialization to enhancing the readability of properties and serving as parameters for seamless conversions.
+
+The behavior of collection expressions, with the added spread operator .., reinforces their flexibility. While the var keyword is no longer applicable due to the need for explicit type determination, this trade-off ensures a clear and consistent syntax.
+
+## Ref readonly parameters
+
+## Default lambda parameters
+
+## Alias any type
+
+## Experimental attribute
+
+## Interceptors
