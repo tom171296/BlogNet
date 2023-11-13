@@ -192,7 +192,8 @@ var lambda = (int age = 1) => age >= 18;
 lambda(); // No error, age is 1
 ```
 
-// use cases for default lambda parameters
+### Default lambda parameters
+The introduction of default parameters in C# 12 revolutionizes lambda expressions, providing a powerful feature previously reserved for traditional functions. This enhancement, exemplified by assigning default values to parameters, particularly shines in minimal APIs. Now, lambda expressions empower concise, customizable functionality, offering a seamless blend of brevity and flexibility in the development of streamlined, efficient minimalistic APIs.
 
 
 ## Alias any type
