@@ -159,8 +159,41 @@ These examples illustrate how collection expressions streamline various scenario
 The behavior of collection expressions, with the added spread operator .., reinforces their flexibility. While the var keyword is no longer applicable due to the need for explicit type determination, this trade-off ensures a clear and consistent syntax.
 
 ## Ref readonly parameters
+In C#, parameters act as inputs to methods and are classified as either value types or reference types. **Value type** parameters transmit a copy of the data, while **reference type** parameters convey a reference to the actual data. The `ref` keyword enables explicit passing value types by reference, allowing direct modification of the original data. The `in` keyword also passes the parameter by reference but makes it read-only, preventing modification of the original data. To enhance clarity in APIs utilizing ref or in parameters, Microsoft introduced `ref readonly` parameters. This improvement aids in distinguishing methods that modify data from those that only read it.
+
+### Behavior
+So the behavior of `ref readonly` actually already exists in the `in` keyword. The reference of the desired parameter is passed in a **readonly** way to the method. This means that the method can't change the value of the parameter.
+
+```csharp
+public void refReadOnly(ref readonly int someValue)
+{
+    someValue = 5; // Error
+}
+```
+
+### Ref readonly parameters
+So with the introduction of ref readonly parameters, no real new functionality is added. This feature makes defining feature more clearly, making explicit and clear that the method can't change the value of the parameter. Personally I think this feature will be mostly used by library developers to make the API more clear.
 
 ## Default lambda parameters
+Lambda expressions in C# offer concise, anonymous functions, streamlining code with a compact syntax. Using the "=>" operator, these powerful constructs simplify the creation of functions, particularly in scenarios involving delegates, LINQ queries, and asynchronous programming.
+
+### Behavior
+By default a parameter defined in a lambda is required. Normal functions in C# can have default parameters. This means that when you call a function without a value for a parameter, the default value is used. 
+
+```csharp
+var lambda = (int age) => age >= 18;
+lambda(); // error, no value for age
+```
+
+With the introduction of default parameters in C# 12, it is now possible to define a default value for a parameter in a lambda. This means that when you call a lambda without a value for a parameter, the default value is used.
+
+```csharp
+var lambda = (int age = 1) => age >= 18;
+lambda(); // No error, age is 1
+```
+
+// use cases for default lambda parameters
+
 
 ## Alias any type
 
