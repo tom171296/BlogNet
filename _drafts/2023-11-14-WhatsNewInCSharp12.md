@@ -195,8 +195,33 @@ lambda(); // No error, age is 1
 ### Default lambda parameters
 The introduction of default parameters in C# 12 revolutionizes lambda expressions, providing a powerful feature previously reserved for traditional functions. This enhancement, exemplified by assigning default values to parameters, particularly shines in minimal APIs. Now, lambda expressions empower concise, customizable functionality, offering a seamless blend of brevity and flexibility in the development of streamlined, efficient minimalistic APIs.
 
-
 ## Alias any type
+Aliases are a way to create a new name for an types (class, delegated, interfaces, records and structs). This can be particularly useful when dealing with complex or lengthy type names, enhancing code readability and conciseness. This worked acceptably well as it provided a means to introduce non-conflicting names in cases where a normal named pulled in from using_directives might be ambiguous, and it allowed a way to provide a simpler name when dealing with complex generic types. Prior to C# 12, pointer types, array types and tuple types couldn't use an alias. With the introduction of alias any type, this limitation is removed, allowing the use of aliases for any type.
+
+### Behavior
+The behavior of alias any type is the same as the behavior of alias type. The only difference is that you can now use aliases for pointer types, array types and tuple types. Both of the next examples weren't possible before C# 12.
+
+```csharp
+using Point3d = (int x, int y, int z);
+using arrayType = int[];
+```
+
+### Usage
+The usage of an alias any type uses the `new` keyword. For example the given aliases in the last example can be created as follows.
+
+```csharp
+Point3d point = new(10, 10, 30); // explicit via type
+var point = new Point3d(10, 10, 30); // explicit via `constructor`
+```
+### Destruction
+These aliases can also be used in a destruction statement. This means that you can use the alias to deconstruct a tuple or array.
+
+```csharp
+var (a,b,c) = new Point3d(10, 10, 30); // deconstruct tuple
+```
+
+### Alias type
+
 
 ## Experimental attribute
 
