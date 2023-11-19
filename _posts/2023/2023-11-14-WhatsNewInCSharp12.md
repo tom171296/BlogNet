@@ -5,9 +5,9 @@ header:
 excerpt: Get a glimpse of the new language features in C# 12
 published: true
 tags: [.NET, C#, .NET CORE]
-cover-img: /assets/images/2023/CSharp12/C#_header.jpg
-thumbnail-img: /assets/images/2023/CSharp12/C#_header.jpg
-share-img: /assets/images/2023/CSharp12/C#_header.jpg
+cover-img: /assets/images/2023/CSharp12/header.jpg
+thumbnail-img: /assets/images/2023/CSharp12/header.jpg
+share-img: /assets/images/2023/CSharp12/header.jpg
 ---
 
 # Whats new in C# 12
