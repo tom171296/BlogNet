@@ -205,7 +205,6 @@ using Point3d = (int x, int y, int z);
 using arrayType = int[];
 ```
 
-### Usage
 The usage of an alias any type uses the `new` keyword. For example the given aliases in the last example can be created as follows.
 
 ```csharp
