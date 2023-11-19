@@ -1,5 +1,5 @@
 ---
-title: 
+title: What's new in C# 12, a developer's perspective
 header:    
     teaser: 
 excerpt: 
@@ -11,7 +11,9 @@ share-img: /assets/img/path.jpg
 ---
 
 # Whats new in C# 12
+As we delve into the latest iteration of the C# programming language, version 12, one might find that while there isn't an array of groundbreaking features that immediately catch the eye, there's a notable emphasis on refining and enhancing the language's existing capabilities. C# 12 introduces a series of improvements aimed at making the language more consistent, streamlining syntax, and addressing specific use cases. In this exploration, we'll navigate through these enhancements, acknowledging that some features may feel tailor-made for Microsoft's internal development needs but have been generously made public.
 
+While the absence of flashy, headline-grabbing features may seem unremarkable at first glance, the real magic lies in the meticulous attention to detail. These updates contribute to a more coherent and streamlined programming experience, fostering consistency and reducing friction in various aspects of C# development. Let's embark on a journey through the nuanced landscape of C# 12, where the devil is in the details, and the enhancements subtly reshape the language's terrain.
 
 
 ## Primary constructors
@@ -110,8 +112,6 @@ In conclusion, primary constructors in C# offer a concise and consistent way to 
 However, this brevity comes with a trade-off, as primary constructors introduce a level of abstraction and "magic" under the hood. The parameters declared in the primary constructor are implicitly transformed into private fields, which can impact the predictability of the code for developers unfamiliar with this feature.
 
 While primary constructors are advantageous for scenarios such as dependency injection, where a straightforward initialization is desired, they may not be suitable for situations that require more complex checks or logic during object creation. In cases where additional validation or manipulation is needed, the traditional constructor syntax might be more appropriate.
-
-In summary, primary constructors provide a valuable tool for certain use cases by simplifying the syntax and reducing redundancy, but developers should carefully consider their application, especially when dealing with more intricate object creation scenarios.
 
 ## Collection expressions
 In the dynamic landscape of C# programming, the ubiquity of collection-like values is unquestionable. These values are fundamental for data storage and exchange between components. However, the current state of affairs presents a challenge: the creation of such values involves a myriad of verbose approaches.
@@ -221,8 +221,136 @@ var (a,b,c) = new Point3d(10, 10, 30); // deconstruct tuple
 ```
 
 ### Alias type
-
+The introduction of alias any type in C# 12 eliminates the previous restrictions on using aliases for pointer types, array types, and tuple types. This enhancement promotes consistency across the language, enabling developers to create simpler and more readable code by introducing non-conflicting names for various types. The behavior remains consistent with alias type, and with the new capability, developers can now utilize aliases for all types, fostering better code organization and conciseness.
 
 ## Experimental attribute
+The Experimental attribute serves as a marker in programming languages indicating that a particular feature or functionality is in an experimental or pre-release state. When applied to code elements like classes, methods, or properties, this attribute signals to developers that the associated code is not yet finalized or fully supported. It provides a clear indication that the marked feature may undergo changes or refinements in future releases, encouraging developers to use it cautiously and be aware of potential updates or deprecations.
+
+### Behavior
+With the release of C# 12, the Experimental attribute is now available for use in C# code. This attribute can be applied to classes, methods, properties, and other code elements, and it can be used to mark experimental features or functionality.
+
+```csharp
+[Experimental(diagnosticId: "diagnosticId", UrlFormat = "http://google.com")]
+```
+The `DiagnosticID` is required. This ID is used by the compiler to report the use of the experimental feature. The `UrlFormat` is optional. This URL is used to provide more information about the experimental feature. You can link it for example to your github issue or an Azure devops feature that addresses the experimental feature.
+
+### Experimental attribute
+The Experimental attribute in C# 12 serves as a useful tool for both platform engineers and package developers to clearly designate experimental features. As the landscape of software development evolves, this feature enables exploration of new functionalities while ensuring awareness of potential updates. In C# 12, the Experimental attribute facilitates an adaptable development approach, catering to the dynamic nature of modern software engineering across various contexts.
+
+## Inline arrays
+The .NET team is always looking on how they can improve performance. With the introduction to inline arrays, they created a way to create an array of a fixed size in a `struct type`. As a developer, you probally won't ever use this feature, it is mainly added for the .NET runtime team to get more performance out of the runtime.
+
+### Behavior
+The creation of an inline array is as follows:
+
+```csharp
+[System.Runtime.CompilerServices.InlineArray(10)] // Attribute
+public struct InlineArray
+{
+    private string _element0;
+    private int test; // will generate an error
+}
+```
+
+The attribute has one parameter. This parameter is the size of the array. The size of the array is fixed and can't be changed. The size of the array is also the number of elements that are created in the struct. An struct that is decorated with the inline array attribute can only have one instance field. The type of the field is the type of the array created. 
+
+Inializing an inline array is done by using the `new` keyword. The size of the array is determined by the attribute. The array can be filled like a normal array. Make sure you don't go out of bounds, this will generate a runtime exception.
+
+```csharp
+var array = new InlineArray();
+for (int i = 0; i < 10; i++) // can't be longer than the size of the array, will generate a runtime exception
+{
+    array[i] = i.ToString();
+}
+```
+
+### Inline arrays
+The introduction of inline arrays in C# 12 reflects the .NET team's commitment to optimizing runtime performance. This feature allows for the creation of fixed-size arrays within a struct type. While this capability may not be extensively utilized by developers in their day-to-day coding, it serves as a specialized tool primarily designed to enhance the performance of the .NET runtime.
 
 ## Interceptors
+An interceptor is a method that can declaratively substitute a call to an interceptable method with a call to itself at compile time. This substitution occurs by having the interceptor declare the source locations of the calls that it intercepts. 
+
+With the release of C# 12, interceptors are available as preview feature. This means that you have to enable the preview feature in your project file. This can be done by adding the following line to your project file.
+```xml
+<LangVersion>preview</LangVersion>
+<Features>InterceptorsPreview</Features>
+```
+
+The second step that you need to do to use an interceptor is create the attribute. The preview feature is added to the language, but the attribute itself isn't available to use yet. So you have to create it yourself
+
+```csharp
+namespace System.Runtime.CompilerServices;
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class InterceptsLocationAttribute(string filePath, int line, int character) : Attribute
+{
+}
+```
+
+### Behavior
+The behavior of an interceptor is that it can intercept a call to a method. This means that you can replace the call to a method with a call to another method. This is done by using the `InterceptsLocationAttribute` attribute. This attribute is used to mark the method that intercepts the call. The attribute has three parameters. The first parameter is the file path of the method that is intercepted. The second parameter is the line number of the method that is intercepted. The third parameter is the character position of the method that is intercepted.
+
+So lets say we have the following class that contains a method that we want to intercept.
+```csharp
+namespace _8.Interceptors;
+
+public class InterceptTest
+{
+    public void PrintStuff(string stuff) // Method we want to intercept
+    {
+        Console.WriteLine(stuff);
+    }
+}
+```
+
+And the following using of the method:
+```csharp
+using _8.Interceptors;
+new InterceptTest().PrintStuff("Hello, World!");
+```
+
+Intercepting a method is done at the location it is used. This means that we have to intercept the call that is done to `PrintStuff("Hello, World!")`. To do this, the attribute has the following signature in use:
+```csharp
+public static class Interception
+{
+    [InterceptsLocation(
+        filePath: @"absoluthePath/SomeClass.cs", // Path to the file that contains the method invocation that is intercepted
+        line: 4, // Line number of the method invocation that is intercepted
+        character: 21 // Character position of the method invocation that is intercepted
+    )]
+    public static void InterceptMethod(this InterceptTest interceptTest, string param){
+        Console.WriteLine($"Intercepted: {param}");
+    }
+}
+```
+
+The use of the attribute will give the following error: `The 'interceptors' experimental feature is not enabled in this namespace. Add '<InterceptorsPreviewNamespaces>$(InterceptorsPreviewNamespaces);Interceptors</InterceptorsPreviewNamespaces>' to your project.`. This error is shown because the namespace of the attribute isn't enabled for the interceptors preview feature. To enable the namespace, you have to add the following line to your project file.
+
+```xml
+<InterceptorsPreviewNamespaces>$(InterceptorsPreviewNamespaces);Interceptors</InterceptorsPreviewNamespaces>
+```
+Running the example code will intercept the call to the `PrintStuff` method and will print the following output:
+```
+Intercepted: Hello, World!
+```
+
+### Interceptors
+Interceptors in C# constitute a specialized feature, intricately designed to be employed by Microsoft and developers intricately working with source generators. Primarily used for advanced scenarios, interceptors play a key role in code interception within the context of source compilation modification. Specifically integrated into source generators, interceptors substitute calls to interceptable methods, offering a nuanced approach to code manipulation. While not intended for widespread adoption, this feature caters to the precise needs of developers engaged in deep customization, emphasizing its role within specialized development and source code generation.
+
+## Conclusion
+C# 12 introduces several noteworthy features that enhance the language's expressiveness and flexibility. Primary constructors provide a concise and consistent way to declare constructors for classes and structs, streamlining code and improving readability. However, developers should be mindful of the implicit transformations of parameters into private fields, which may introduce abstraction and "magic" that could affect predictability.
+
+Collection expressions address the verbosity associated with various collection types, offering a concise and consistent syntax. The spread operator further enhances flexibility by allowing the insertion of elements from one collection into another. These improvements simplify the creation of collection-like values, making code more readable and efficient.
+
+Ref readonly parameters refine the distinction between methods that modify data and those that only read it. While not introducing new functionality, this feature enhances code clarity, especially in APIs where explicit read-only behavior is crucial.
+
+Default lambda parameters extend the power of lambda expressions by allowing the definition of default values for parameters. This addition, previously available only in traditional functions, contributes to the development of more concise and customizable functionality, particularly in minimal APIs.
+
+The introduction of alias any type eliminates previous restrictions on using aliases for pointer types, array types, and tuple types. This enhancement promotes consistency across the language, enabling developers to create simpler and more readable code by introducing non-conflicting names for various types.
+
+The Experimental attribute serves as a valuable marker for experimental or pre-release features, providing transparency and signaling potential updates or deprecations. This attribute facilitates an adaptable development approach, enabling exploration of new functionalities while ensuring awareness of potential changes.
+
+Inline arrays, a performance-focused feature designed to create fixed-size arrays within a struct type. While developers may not frequently use this feature, it aligns with the .NET team's focus on optimizing runtime performance. Inline arrays cater to specific scenarios, showcasing C#'s commitment to refinement for both general and specialized use cases.
+
+Finally, the preview feature of interceptors provides a specialized tool for code interception within the context of source compilation modification. While not intended for widespread use, interceptors offer a nuanced approach to code manipulation, catering to the specific needs of developers engaged in deep customization and source code generation.
+
+C# 12, with its diverse set of features, continues to evolve the language, addressing both common development challenges and specialized scenarios, empowering developers with enhanced tools and capabilities.
