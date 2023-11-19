@@ -5,9 +5,9 @@ header:
 excerpt: Get a glimpse of the new language features in C# 12
 published: true
 tags: [.NET, C#, .NET CORE]
-cover-img: /assets/images/2023/C#12/C#_header.png
-thumbnail-img: /assets/images/2023/C#12/C#_header.png
-share-img: /assets/images/2023/C#12/C#_header.png
+cover-img: ../../assets/images/2023/C#12/C#_header.png
+thumbnail-img: ../../assets/images/2023/C#12/C#_header.png
+share-img: ../../assets/images/2023/C#12/C#_header.png
 ---
 
 # Whats new in C# 12
@@ -67,8 +67,7 @@ public class SubPerson : Person
     {
     }
 }
-```
-```csharp
+
 public class SubPerson(string lastname) : Person("", lastname) {} // with primary constructor
 ```
 
