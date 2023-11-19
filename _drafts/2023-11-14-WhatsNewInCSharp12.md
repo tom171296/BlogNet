@@ -2,12 +2,12 @@
 title: What's new in C# 12, a developer's perspective
 header:    
     teaser: 
-excerpt: 
-published: false
-tags: []
-cover-img: /assets/img/path.jpg
-thumbnail-img: /assets/img/thumb.png
-share-img: /assets/img/path.jpg
+excerpt: Get a glimpse of the new language features in C# 12
+published: true
+tags: [.NET, C#, .NET CORE]
+cover-img: /assets/images/2023/C#12/C#_header.png
+thumbnail-img: /assets/images/2023/C#12/C#_header.png
+share-img: /assets/images/2023/C#12/C#_header.png
 ---
 
 # Whats new in C# 12
