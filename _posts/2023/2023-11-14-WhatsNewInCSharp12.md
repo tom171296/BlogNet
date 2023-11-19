@@ -1,5 +1,5 @@
 ---
-title: What's new in C# 12, a developer's perspective
+title: What's new in C# 12, a developer perspective
 header:    
     teaser: 
 excerpt: Get a glimpse of the new language features in C# 12
