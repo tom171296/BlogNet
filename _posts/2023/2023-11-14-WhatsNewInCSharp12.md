@@ -10,7 +10,7 @@ thumbnail-img: /assets/images/2023/CSharp12/header.jpg
 share-img: /assets/images/2023/CSharp12/header.jpg
 ---
 
-# Whats new in C# 12
+# What's new in C# 12
 As we delve into the latest iteration of the C# programming language, version 12, one might find that while there isn't an array of groundbreaking features that immediately catch the eye, there's a notable emphasis on refining and enhancing the language's existing capabilities. C# 12 introduces a series of improvements aimed at making the language more consistent, streamlining syntax, and addressing specific use cases. In this exploration, we'll navigate through these enhancements, acknowledging that some features may feel tailor-made for Microsoft's internal development needs but have been generously made public.
 
 While the absence of flashy, headline-grabbing features may seem unremarkable at first glance, the real magic lies in the meticulous attention to detail. These updates contribute to a more coherent and streamlined programming experience, fostering consistency and reducing friction in various aspects of C# development. Let's embark on a journey through the nuanced landscape of C# 12, where the devil is in the details, and the enhancements subtly reshape the language's terrain.
@@ -230,13 +230,13 @@ With the release of C# 12, the Experimental attribute is now available for use i
 ```csharp
 [Experimental(diagnosticId: "diagnosticId", UrlFormat = "http://google.com")]
 ```
-The `DiagnosticID` is required. This ID is used by the compiler to report the use of the experimental feature. The `UrlFormat` is optional. This URL is used to provide more information about the experimental feature. You can link it for example to your github issue or an Azure devops feature that addresses the experimental feature.
+The `DiagnosticID` is required. This ID is used by the compiler to report the use of the experimental feature. The `UrlFormat` is optional. This URL is used to provide more information about the experimental feature. You can link it for example to your Github issue or an Azure Devops feature that addresses the experimental feature.
 
 ### Experimental attribute
 The Experimental attribute in C# 12 serves as a useful tool for both platform engineers and package developers to clearly designate experimental features. As the landscape of software development evolves, this feature enables exploration of new functionalities while ensuring awareness of potential updates. In C# 12, the Experimental attribute facilitates an adaptable development approach, catering to the dynamic nature of modern software engineering across various contexts.
 
 ## Inline arrays
-The .NET team is always looking on how they can improve performance. With the introduction to inline arrays, they created a way to create an array of a fixed size in a `struct type`. As a developer, you probally won't ever use this feature, it is mainly added for the .NET runtime team to get more performance out of the runtime.
+The .NET team is always looking on how they can improve performance. With the introduction to inline arrays, they created a way to create an array of a fixed size in a `struct type`. As a developer, you probably won't ever use this feature, it is mainly added for the .NET runtime team to get more performance out of the runtime.
 
 ### Behavior
 The creation of an inline array is as follows:
@@ -252,7 +252,7 @@ public struct InlineArray
 
 The attribute has one parameter. This parameter is the size of the array. The size of the array is fixed and can't be changed. The size of the array is also the number of elements that are created in the struct. An struct that is decorated with the inline array attribute can only have one instance field. The type of the field is the type of the array created. 
 
-Inializing an inline array is done by using the `new` keyword. The size of the array is determined by the attribute. The array can be filled like a normal array. Make sure you don't go out of bounds, this will generate a runtime exception.
+Initializing an inline array is done by using the `new` keyword. The size of the array is determined by the attribute. The array can be filled like a normal array. Make sure you don't go out of bounds, this will generate a runtime exception.
 
 ```csharp
 var array = new InlineArray();
