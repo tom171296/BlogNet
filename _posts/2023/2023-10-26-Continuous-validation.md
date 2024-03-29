@@ -4,7 +4,7 @@ header:
     teaser: Embark on an Exciting Journey to Master Mission-Critical Success in the Cloud. Discover the Secrets of Availability and Resilience!
 excerpt: Embark on an Exciting Journey to Master Mission-Critical Success in the Cloud. Discover the Secrets of Availability and Resilience!
 published: true
-tags: [Non-functionals, CI/CD, Testing, Cloud, Azure]
+tags: [Non-functionals, CI/CD, Testing, Cloud, Azure, Digital immune system]
 ---
 
 In the world of software development, there was a time when the primary focus was on functional requirements - making sure that the software did what it was supposed to do. Extensive testing, meticulous code reviews, and exhaustive validation processes were put in place to ensure that every feature and function worked flawlessly. And we got really good at it. Functional requirements became the cornerstone of our development processes, and for a good reason - they defined what the software was meant to achieve.
