@@ -37,9 +37,26 @@ Project 'ChainGuardian' has the following package references
    > System.Text.Encodings.Web      7.0.0
    > System.Text.Json               7.0.3
 ```
-For the packages that are directly referenced, it is quit simple, you can use the `PackageReference` in the projects `.csproj` files to see what packages are referenced.
+
+Understanding the dependency graph of your software is essential for upholding its integrity and security. It's comparable to familiarizing yourself with the ingredients of a dish before sharing it with others; it ensures that no harmful or unexpected elements jeopardize the quality or safety of your product.
+
+Automating the generation of your dependency graph can streamline and enhance the management of your software projects. Imagine having a dynamic, up-to-date visualization of your software's dependencies at your fingertips, without manual effort. This automation not only saves time but also enhances accuracy and enables proactive decision-making.
+
+One of the primary benefits of automating dependency graph generation is its ability to keep pace with the rapid evolution of software projects. As developers add, update, or remove dependencies, the automated process immediately reflects these changes in the dependency graph. This real-time view ensures that stakeholders are always equipped with the latest insights into their software's composition.
+
+ Through the generation and analysis of a Software Bill of Materials (SBOM), encompassing both direct and transitive dependencies, developers attain insight into their software's makeup. SBOMs facilitate enhanced risk management by empowering developers to pinpoint vulnerabilities, monitor licensing obligations, and promptly address security threats or updates within their software supply chain. Furthermore, they promote transparency and collaboration throughout the software development landscape, empowering stakeholders to make well-informed decisions regarding the software they develop, deploy, and utilize.
+
+ If you use [Github](https://github.com/) as source control for your project, you can use the dependency graph feature to have a look at the "Top-level packages" that are used by your project. The Github dependecy graph uses the [SPDX format](https://spdx.dev/). 
+
+ A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
+
+ Both `
+
 
 TODO: write something about the SBOM
+
+TODO: Write something about restoring packages
+    - ASYNC
 
  # Risks as a consumer
 
