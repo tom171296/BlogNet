@@ -50,7 +50,7 @@ One of the primary benefits of automating dependency graph generation is its abi
 
  A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
 
- Both `
+ Both the SPDX and 
 
 
 TODO: write something about the SBOM
