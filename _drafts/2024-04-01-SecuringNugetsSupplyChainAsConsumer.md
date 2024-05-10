@@ -44,22 +44,23 @@ Automating the generation of your dependency graph can streamline and enhance th
 
 One of the primary benefits of automating dependency graph generation is its ability to keep pace with the rapid evolution of software projects. As developers add, update, or remove dependencies, the automated process immediately reflects these changes in the dependency graph. This real-time view ensures that stakeholders are always equipped with the latest insights into their software's composition.
 
- Through the generation and analysis of a Software Bill of Materials (SBOM), encompassing both direct and transitive dependencies, developers attain insight into their software's makeup. SBOMs facilitate enhanced risk management by empowering developers to pinpoint vulnerabilities, monitor licensing obligations, and promptly address security threats or updates within their software supply chain. Furthermore, they promote transparency and collaboration throughout the software development landscape, empowering stakeholders to make well-informed decisions regarding the software they develop, deploy, and utilize.
+Through the generation and analysis of a Software Bill of Materials (SBOM), encompassing both direct and transitive dependencies, developers attain insight into their software's makeup. SBOMs facilitate enhanced risk management by empowering developers to pinpoint vulnerabilities, monitor licensing obligations, and promptly address security threats or updates within their software supply chain. Furthermore, they promote transparency and collaboration throughout the software development landscape, empowering stakeholders to make well-informed decisions regarding the software they develop, deploy, and utilize.
 
- If you use [Github](https://github.com/) as source control for your project, you can use the dependency graph feature to have a look at the "Top-level packages" that are used by your project. The Github dependecy graph uses the [SPDX format](https://spdx.dev/). 
+If you use [Github](https://github.com/) as source control for your project, you can use the dependency graph feature to have a look at the "Top-level packages" that are used by your project. The Github dependecy graph uses the [SPDX format](https://spdx.dev/). 
 
- A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
+A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
 
- Both the SPDX and 
+Both the SPDX and CycloneDX are able to generate a SBOM file for you. There is a difference between the two. The SPDX format is a standard that is used to describe the licenses of the software. The CycloneDX format is a standard that is used to describe the dependencies of the software. Which means that in the case of vulnerabilities, the CycloneDX format is more useful.
 
+# Restoring packages
+Using third party packages requires you to restore them via Nuget. All project dependencies that are listed in either a project file or a packages.config file are restored. 
 
-TODO: write something about the SBOM
+Package restore first installs all the direct dependencies. These are the dependencies that are directly referenced between the `<PackageReference>` tags or `<package>` tags, then installs any dependencies of those packages throughout the entire dependency graph. Nuget will first scan the local global packages or HTTP cache folders. If the required package isn't in the local folders, Nuget tries to download it from all sources that you configured as package source.
 
-TODO: Write something about restoring packages
-    - ASYNC
+What is interesting is that Nuget ignores the order of package sources configured. It uses the package source that responds the quickest. This means that by default, you don't have any control from what source you are restoring your packages. If a restore fails, Nuget doesn't indicate the failure until after it checks all sources. Nuget reports a failure ony for the last source in the list. The error implies that the package wasn't present on any of the resources.
 
- # Risks as a consumer
-
+# Risks as a consumer
+Let's dive more into the default behavior of a restore action. 
 
 
 - Risks as a consumer
