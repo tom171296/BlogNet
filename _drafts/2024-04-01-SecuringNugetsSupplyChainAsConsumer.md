@@ -60,32 +60,68 @@ Package restore first installs all the direct dependencies. These are the depend
 What is interesting is that Nuget ignores the order of package sources configured. It uses the package source that responds the quickest. This means that by default, you don't have any control from what source you are restoring your packages. If a restore fails, Nuget doesn't indicate the failure until after it checks all sources. Nuget reports a failure ony for the last source in the list. The error implies that the package wasn't present on any of the resources.
 
 # Risks as a consumer
-Let's dive more into the default behavior of a restore action. 
+Including third-party packages in your software projects introduces a variety of risks that can compromise the integrity and security of your software supply chain. Let's dive more into what some different risks you are exposed to as a consumer of third-party packages.
+
+## Malicious code
+If you include software of which you don't know the origin, you are exposed to the risk of including malicious code in your software. There can be harmfull scripts in the package that are designed to exploit vulnerabilties in your software.
+
+Looking at recent history, there a examples of malicious code having a big impact on the world of software development. One of the most famous examples was the finding of a [vulnerability in Log4J](https://www.ncsc.gov.uk/information/log4j-vulnerability-what-everyone-needs-to-know#:~:text=Last%20week%2C%20a%20vulnerability%20was,infect%20networks%20with%20malicious%20software.), an open-source logging library that is widely used by apps and services across the internet. Exploiting this vulnerability, attackers could break into systems, steal passwords and logins, extract data and infect networks.
+
+Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
+
+The Log4J vulnerability is an example of a supply chain attack where attackers where able to exploit a vulnerability that was **implemented unintentionally**. The SolarWinds hack was different, hackers add malicious code at build time on the server that they could later use as an exploit backdoor on the servers where the software was installed.
+
+In the scope of securing your Nuget supply chain, there are a few steps you can take. First of all, you can use the `dotnet list package --vulnerable` command to check if there are any known vulnerabilities in the packages that you are using. This command will output a list of all the packages that have known vulnerabilities.
+
+A more easily step is to use Visual Studio. Visual Studio has a feature that will show you a warning if you have a vulnerability in your project. This warning will show up in the error list of Visual Studio. 
+
+![Visual Studio Vulnerability](/assets/images/2024/SupplyChainSecurity/VS_vulnerable_packages.png)
+
+To make sure that you don't introduce a vulnerable package with a new release, you must include a [step in your build pipeline](https://github.com/tom171296/ChainGuardian.DotNetNuGet/blob/main/.github/workflows/dotnet.yml) that checks the packages that are being used. This can be done by exporting the BOM of your software and using a tool to scan for vulnerabilities. Like described before, I always use the OWASP CycloneDX tool to generate the BOM of my software. This BOM can then be used by other tools to scan for vulnerabilities. 
 
 
-- Risks as a consumer
-    - malicious code is purposefully added to a package
-    - typos 
-    - multiple package sources
-        - async call to all sources, 
-        - https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610
 
 
 
-TODO:
-WHAT ARE THE RISKS?
-EXAMPLES OF RISKS
--  Dependency confusion
--  Malicious publishing of packages
 
-# Mitigate these risks
+-- SBOM
+-- What is malicious code / exploits / backdoors
+--- Known CVE's
+--- Packages altered after being signed
+-- How to mitigate
+--- dotnet list package --vulnerable
+--- Use visual studio, it has functionality that shows you a warning if you have a vulnerability
+--- Export the BOM and use a tool to scan for vulnerabilities
+
+-- Why are you vulnerable
+-- How to mitigate within your nuget supply chain
+
+## Typosquatting attack
+-- what is typosquatting
+-- why are you vulnerable
+-- how to mitigate
+--- use a private feed
+--- trusted signers
+
+## Dependency confusion
+-- What is dependency confusion
+-- Why are you vulnerable
+-- How to mitigate
+--- claim prefix
+--- use a private feed
+--- trusted signers
+--- package source mapping
+
 
 Manage your dependencies
 - Package sources
 - Package source mapping
-    - Github code space
-        - Test if nuget config is automatic created if none is present.
-        - Saw this going wrong in the github code space.
 - Trusted signers
     - https://learn.microsoft.com/en-us/nuget/consume-packages/installing-signed-packages
-- Lock files
+
+
+# Conslusion
+
+
+
+
