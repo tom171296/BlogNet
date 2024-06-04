@@ -62,27 +62,25 @@ What is interesting is that Nuget ignores the order of package sources configure
 # Risks as a consumer
 Including third-party packages in your software projects introduces a variety of risks that can compromise the integrity and security of your software supply chain. Let's dive more into what some different risks you are exposed to as a consumer of third-party packages.
 
-## Malicious code
-If you include software of which you don't know the origin, you are exposed to the risk of including malicious code in your software. There can be harmfull scripts in the package that are designed to exploit vulnerabilties in your software.
+## Vulnerabilities
+If you include software of which you don't know the origin, you are exposed to the risk of including malicious code in your software. There can be vulnerabilities in the package that could be exploited and be used as a backdoor to harm your environment.
 
 Looking at recent history, there a examples of malicious code having a big impact on the world of software development. One of the most famous examples was the finding of a [vulnerability in Log4J](https://www.ncsc.gov.uk/information/log4j-vulnerability-what-everyone-needs-to-know#:~:text=Last%20week%2C%20a%20vulnerability%20was,infect%20networks%20with%20malicious%20software.), an open-source logging library that is widely used by apps and services across the internet. Exploiting this vulnerability, attackers could break into systems, steal passwords and logins, extract data and infect networks.
 
-Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
+The Log4J vulnerability is an example of a supply chain attack where attackers where able to exploit a vulnerability that was **implemented unintentionally**. There are several databases filled with vulnerabilties that are known. One of the most famous databases is the [Common Vulnerabilities and Exposures (CVE)](https://cve.mitre.org/). This databases are used by tooling to check if there are any known vulnerabilities in the packages that you are using.
 
-The Log4J vulnerability is an example of a supply chain attack where attackers where able to exploit a vulnerability that was **implemented unintentionally**. The SolarWinds hack was different, hackers add malicious code at build time on the server that they could later use as an exploit backdoor on the servers where the software was installed.
+In the scope of securing your Nuget supply chain, there are a few steps you can take. First of all, you can use the `dotnet list package --vulnerable` command to check if there are any known vulnerabilities in the packages that you are using. This command will output a list of all the packages that have known vulnerabilities. 
 
-In the scope of securing your Nuget supply chain, there are a few steps you can take. First of all, you can use the `dotnet list package --vulnerable` command to check if there are any known vulnerabilities in the packages that you are using. This command will output a list of all the packages that have known vulnerabilities.
-
-A more easily step is to use Visual Studio. Visual Studio has a feature that will show you a warning if you have a vulnerability in your project. This warning will show up in the error list of Visual Studio. 
+Following the shift-left principle, you can also use Visual Studio to check if there are any known vulnerabilities in the packages that you are using. Visual Studio has a feature that will show you a warning if you have a vulnerability in your project.
 
 ![Visual Studio Vulnerability](/assets/images/2024/SupplyChainSecurity/VS_vulnerable_packages.png)
 
+If you're like me, I'm using visual studio code and not running the `dotnet list package --vulnerable` command every time I install a new package. To automate this process, you can use the OWASP CycloneDX tool to generate the SBOM of your software. This SBOM can then be used by other tools to scan for vulnerabilities. One of the tools that I use is [Trivy](https://trivy.dev/).
+
+
+-- Running trivy `docker run -v .\src\ChainGuardian\:/src/ChainGuardian aquasec/trivy fs --scanners vuln ./src/ChainGuardian`
+
 To make sure that you don't introduce a vulnerable package with a new release, you must include a [step in your build pipeline](https://github.com/tom171296/ChainGuardian.DotNetNuGet/blob/main/.github/workflows/dotnet.yml) that checks the packages that are being used. This can be done by exporting the BOM of your software and using a tool to scan for vulnerabilities. Like described before, I always use the OWASP CycloneDX tool to generate the BOM of my software. This BOM can then be used by other tools to scan for vulnerabilities. 
-
-
-
-
-
 
 -- SBOM
 -- What is malicious code / exploits / backdoors
@@ -114,6 +112,7 @@ To make sure that you don't introduce a vulnerable package with a new release, y
 
 ## Something about reproducible builds
 
+Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
 
 
 Manage your dependencies
