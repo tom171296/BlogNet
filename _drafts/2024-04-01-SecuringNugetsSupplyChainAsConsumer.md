@@ -5,7 +5,7 @@ subtitle:
 cover-img: /assets/img/path.jpg
 thumbnail-img: /assets/img/thumb.png
 share-img: /assets/img/path.jpg
-tags: [Digital immune system]
+tags: [Digital immune system, supply chain security]
 ---
 
 In an era dominated by digital dependencies, the software supply chain plays a pivotal role in shaping the technology landscape. As consumers, we often download and integrate various packages to enhance the functionality of our applications. NuGet is a package manager for the Microsoft development platform. However, as we embrace the convenience of integrating third-party packages, it becomes imperative to address the lurking shadows of potential vulnerabilities in the software supply chain.
@@ -111,6 +111,9 @@ To make sure that you don't introduce a vulnerable package with a new release, y
 --- use a private feed
 --- trusted signers
 --- package source mapping
+
+## Something about reproducible builds
+
 
 
 Manage your dependencies
