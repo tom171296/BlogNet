@@ -13,11 +13,9 @@ In an era dominated by digital dependencies, the software supply chain plays a p
 # Software Supply Chain 
 Software applications are no longer built entirely from custom code. Instead, they are made up of a variety of third-party components, including open-source libraries, frameworks, and modules. These components are often referred to as dependencies. The software supply chain is the process of managing these dependencies and their security risks.
 
-By defaut, an organization inherits the software supply chain of all parts of its software. This includes the dependencies of the dependencies. This is called the transitive dependencies.
+By defaut, an organization inherits the software supply chain of all parts of its software. This includes the dependencies of the dependencies. This is called the transitive dependencies Because of how big and convoluted the software supply chain can be, it is important to understand the risks and how to mitigate them. In this blog we'll discover a few simple basic hygiene steps to secure your software supply chain. 
 
-Because of how big and convoluted the software supply chain can be, it is important to understand the risks and how to mitigate them. In this blog we'll discover a few simple basic hygiene steps to secure your software supply chain. 
-
-Many developers appear to be unaware of the risks inherent in the software supply chain. Despite the rapid pace of development and heavy reliance on third-party components, it's concerning how frequently developers downplay the potential security vulnerabilities that could affect their applications. Pressing deadlines and the temptation of fast fixes often result in neglecting security aspects within the software supply chain. It's crucial for developers to acknowledge the importance of prioritizing security awareness, implementing proactive measures to strengthen their development methodologies, and protecting their software from the hidden threats they may inadvertently introduce.
+Many developers appear to be unaware of the risks inherent in the software supply chain. Despite the rapid pace of development and heavy reliance on third-party components, it's concerning how frequently developers downplay the potential security vulnerabilities that could affect their applications. Pressing deadlines and the temptation of fast fixes often result in neglecting security aspects within the software supply chain. It's crucial for developers to acknowledge the importance of prioritizing security awareness, implementing proactive measures to strengthen their development methodologies, and protecting their software from the hidden threats they may introduce.
 
 # Knowing what is in your software
 Any time a package is installed or reinstalled, which includes being installed as part of a restore proces, Nuget also installs any additional packages on which that first package depends.
@@ -46,11 +44,9 @@ One of the primary benefits of automating dependency graph generation is its abi
 
 Through the generation and analysis of a Software Bill of Materials (SBOM), encompassing both direct and transitive dependencies, developers attain insight into their software's makeup. SBOMs facilitate enhanced risk management by empowering developers to pinpoint vulnerabilities, monitor licensing obligations, and promptly address security threats or updates within their software supply chain. Furthermore, they promote transparency and collaboration throughout the software development landscape, empowering stakeholders to make well-informed decisions regarding the software they develop, deploy, and utilize.
 
-If you use [Github](https://github.com/) as source control for your project, you can use the dependency graph feature to have a look at the "Top-level packages" that are used by your project. The Github dependecy graph uses the [SPDX format](https://spdx.dev/). 
+If you use [Github](https://github.com/) as source control for your project, you can use the dependency graph feature to have a look at the "Top-level packages" that are used by your project. The Github dependecy graph uses the [SPDX format](https://spdx.dev/). A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
 
-A tool that I commonly use to generate the SBOM of my software is [OWASP CycloneDX](https://cyclonedx.org/). This tool can be integrated into your build pipeline to automatically generate the SBOM of your software. The output of this tool (Json or XML) can be used by other tools. 
-
-Both the SPDX and CycloneDX are able to generate a SBOM file for you. There is a difference between the two. The SPDX format is a standard that is used to describe the licenses of the software. The CycloneDX format is a standard that is used to describe the dependencies of the software. Which means that in the case of vulnerabilities, the CycloneDX format is more useful.
+Both the **SPDX** and **CycloneDX** are able to generate a SBOM file for you. There is a difference between the two. The SPDX format is a standard that is used to describe the licenses of the software. The CycloneDX format is a standard that is used to describe the dependencies of the software. Which means that in my opinion the CycloneDX format is more useful in handling identifying and handling vulnerabilities.
 
 # Restoring packages
 Using third party packages requires you to restore them via Nuget. All project dependencies that are listed in either a project file or a packages.config file are restored. 
@@ -75,24 +71,25 @@ Following the shift-left principle, you can also use Visual Studio to check if t
 
 ![Visual Studio Vulnerability](/assets/images/2024/SupplyChainSecurity/VS_vulnerable_packages.png)
 
-If you're like me, I'm using visual studio code and not running the `dotnet list package --vulnerable` command every time I install a new package. To automate this process, you can use the OWASP CycloneDX tool to generate the SBOM of your software. This SBOM can then be used by other tools to scan for vulnerabilities. One of the tools that I use is [Trivy](https://trivy.dev/).
+Starting from .NET 8 (SDK 8.0.100) the `restore` command [can audit]([Auditing package dependencies for security vulnerabilities | Microsoft Learn](https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages)) all your 3rd party packages. Just add the following lines of code to your project file:
 
+```
+<NuGetAudit>True</NuGetAudit> 
+<NugetAuditMode>All</NugetAuditMode>
+<NuGetAuditLevel>low</NuGetAuditLevel>
+```
 
--- Running trivy `docker run -v .\src\ChainGuardian\:/src/ChainGuardian aquasec/trivy fs --scanners vuln ./src/ChainGuardian`
+This will make sure that the `dotnet restore` command will audit all your packages for known vulnerabilities. If an error is found, the following message will be displayed:
 
-To make sure that you don't introduce a vulnerable package with a new release, you must include a [step in your build pipeline](https://github.com/tom171296/ChainGuardian.DotNetNuGet/blob/main/.github/workflows/dotnet.yml) that checks the packages that are being used. This can be done by exporting the BOM of your software and using a tool to scan for vulnerabilities. Like described before, I always use the OWASP CycloneDX tool to generate the BOM of my software. This BOM can then be used by other tools to scan for vulnerabilities. 
+`
+warning NU1903: Package 'System.Text.RegularExpressions' 4.3.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-cmhx-cq75-c4mj
+`
 
--- SBOM
--- What is malicious code / exploits / backdoors
---- Known CVE's
---- Packages altered after being signed
--- How to mitigate
---- dotnet list package --vulnerable
---- Use visual studio, it has functionality that shows you a warning if you have a vulnerability
---- Export the BOM and use a tool to scan for vulnerabilities
+To make the actual build fail when a vulnerability is found, you can add the following line to your project file:
 
--- Why are you vulnerable
--- How to mitigate within your nuget supply chain
+`<TreatWarningsAsErrors>true</TreatWarningsAsErrors>`
+
+This line will make sure that the build will fail when a vulnerability is found. This will make sure that you don't introduce a vulnerable package with a new release and forces you to update/patch the vulnerability. Adding the above steps will fail your build, that is something you have to keep in mind. Like for me, if I need to fix a production issue that requires a new build, I am forced to fix the vulnerability this way. You have to keep in mind that this is blokking and figure out a way for your organization to deal with this.
 
 ## Typosquatting attack
 -- what is typosquatting
@@ -114,13 +111,8 @@ To make sure that you don't introduce a vulnerable package with a new release, y
 
 Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
 
-
-Manage your dependencies
-- Package sources
-- Package source mapping
-- Trusted signers
-    - https://learn.microsoft.com/en-us/nuget/consume-packages/installing-signed-packages
-
+-- Code signing
+--- What is code signing
 
 # Conslusion
 
