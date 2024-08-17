@@ -23,7 +23,7 @@ Any time a package is installed or reinstalled, which includes being installed a
 The first step of identifying and mitigating risks in the software supply chain is to understand what is in your software. This includes the packages that are directly referenced in your project, as well as the transitive dependencies. With the introduction of the .Net core 3.1 SDK you are able to output the dependency graph of your project. This can be done by running the following command in the root of your project:
 `dotnet list package --include-transitive`. With this command you can output the dependency graph of your project.
 
-```
+```shell
 Project 'ChainGuardian' has the following package references
    [net8.0]:
    Top-level Package      Requested   Resolved
@@ -78,7 +78,7 @@ Following the shift-left principle, you can also use Visual Studio to check if t
 
 Starting from .NET 8 (SDK 8.0.100) the `restore` command [can audit]([Auditing package dependencies for security vulnerabilities | Microsoft Learn](https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages)) all your 3rd party packages. Just add the following lines of code to your project file:
 
-```
+```XML
 <NuGetAudit>True</NuGetAudit> 
 <NugetAuditMode>All</NugetAuditMode>
 <NuGetAuditLevel>low</NuGetAuditLevel>
@@ -86,9 +86,9 @@ Starting from .NET 8 (SDK 8.0.100) the `restore` command [can audit]([Auditing p
 
 This will make sure that the `dotnet restore` command will audit all your packages for known vulnerabilities. If an error is found, the following message will be displayed:
 
-`
+```shell
 warning NU1903: Package 'System.Text.RegularExpressions' 4.3.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-cmhx-cq75-c4mj
-`
+```
 
 To make the actual build fail when a vulnerability is found, you can add the following line to your project file:
 
@@ -97,23 +97,44 @@ To make the actual build fail when a vulnerability is found, you can add the fol
 This line will make sure that the build will fail when a vulnerability is found. This will make sure that you don't introduce a vulnerable package with a new release and forces you to update/patch the vulnerability. Adding the above steps will fail your build, that is something you have to keep in mind. Like for me, if I need to fix a production issue that requires a new build, I am forced to fix the vulnerability this way. You have to keep in mind that this is blokking and figure out a way for your organization to deal with this.
 
 ## Dependency confusion
-Imagine that you work at a company that uses a private Nuget feed to store all the packages that are used in your software projects. You have a package that is called `MyCompany.Common`. This package is used in all the projects that you are working on. You have a private Nuget feed that contains this package. You have a build pipeline that builds the package and pushes it to the private Nuget feed. Via some way of research, a hacker found the name of your private image used internally (`MyCompany.Common`). The hacker then creates a package with the same name, version and adds some malware/backdoor to the source code and uploads it to the public Nuget feed.
+Imagine that you work at a company that uses both a public and a private Nuget feed to retrieve the packages that are used in your software projects. You have a package that is called `MyCompany.Common`. You have a build pipeline that builds the package and pushes it to the private Nuget feed. Via some way of research / reverse engineering, a hacker found the name of your private image used internally (`MyCompany.Common`). The hacker then creates a package with the same name, version and adds some malware/backdoor to the source code and uploads it to the public Nuget feed.
 
 Because of the way a nuget restore works (it uses the first source that responds the quickest), the malicious package from the public Nuget feed can be installed instead of the package from the private Nuget feed. This is called dependency confusion. The hacker is able to inject malicious code into your software without you knowing it. This is a big risk for your software supply chain.
 
 Imagine you are using the package `MyCompany.Common` with version and you reference it in your project file like this `<PackageReference Include="MyCompany.Common" Version="1.0.*" />`. You have a connection to your own private feed and the public Nuget feed. The hacker uploads a package with the name `MyCompany.Common` with version `1.0.1` to the public Nuget feed. When you run a restore, NuGet will restore the package of the hacker because of the resolution rules.
 
+It is good to understand how [Nuget semantic versioning works](https://learn.microsoft.com/en-us/nuget/concepts/package-versioning?tabs=semver20sort#references-in-project-files-packagereference) and what the risks are of the way you reference your packages in your project file.
+
 ### Mitigation
-There are a few things that can be done to mitigate the risk of dependency confusion. The first thing that can be done is to [claim the prefix](https://learn.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation) of your packages. This means that you claim the prefix of your packages on the public Nuget feed. This way, the public Nuget feed will not allow anyone to upload a package with the same prefix as your packages. This will prevent the hacker from uploading a package with the same name as your package. In the example of `MyCompany.Common`, you would claim the prefix `MyCompany`.
+By default, having both a public and a private feed is a risk. I would recommend to **only use a private feed**. This way you (your company) has control over the packages that are available to your software projects. You can configure Nuget to only use the private feed. The configuration of Nuget goes via a [`nuget.config` file](https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file). This file can be placed in the root of your project or in the root of your solution. 
+```XML
+<packageSources>
+   <clear /> <!-- Clear all other package source configuration besides everything below this line -->
+   <add key="private.org" value="https://private-feed.link" protocolVersion="3" /> <!-- Add the private Nuget feed -->
+</packageSources>
+```
 
+If for some reason you use / require a public feed, there are a few things that you can do to mitigate the risk of dependency confusion. The first thing that can be done is to [claim the prefix](https://learn.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation) of your packages. This means that you claim the prefix of your packages on the public Nuget feed. This way, the public Nuget feed will not allow anyone to upload a package with the same prefix as your packages. This will prevent the hacker from uploading a package with the same name as your package. In the example of `MyCompany.Common`, you would claim the prefix `MyCompany`. 
 
+The second thing you can do is to configure Nuget to pull certain images from a certain source. So you can configure Nuget to pull the `MyCompany.Common` package from the private feed. Adding package source mapping requires you to configure *ALL* packages that you use in your solution. This means the directly referenced packages, transative packages and other Nuget sources that are used in for example your build pipeline.  This can be done by configuring the `nuget.config` file like this:
+```XML
+<packageSourceMapping>
+   <packageSource key="nuget.org">
+      <package pattern="MyCompany.*">
+   </packageSource>
+</packageSourceMapping>  
+```
 
+A third thing that you can do is to configure trusted signers. This means that you can configure Nuget to only accept packages that are signed by a certain trusted signer. This way you can make sure that the packages that you are using are signed by a trusted source. This can be done by configuring the `nuget.config` file like this:
+```XML
+<trustedSigners>
+   <author name="MyCompany">
+      <certificate fingerprint="1234567890" hashAlgorithm="SHA256" allowUntrustedRoot="false" />
+   </author>
+</trustedSigners>
+```
 
--- How to mitigate
---- package source mapping
---- use a private feed
---- trusted signers
-
+To protect your software from the serious risks of dependency confusion, it's essential to take proactive measures. Start by configuring Nuget to only use a private feed, ensuring control over the packages integrated into your projects. If you must use a public feed, mitigate risks by claiming your package prefix, setting up package source mapping, and configuring trusted signers. Taking these steps will significantly reduce the likelihood of malicious code infiltrating your software supply chain. Act now by reviewing and updating your Nuget configurations to safeguard your projects against these potential vulnerabilities.
 
 ## Typosquatting attack
 -- what is typosquatting
@@ -130,9 +151,10 @@ There are a few things that can be done to mitigate the risk of dependency confu
 -- Code signing
 --- What is code signing
 
-## Something about reproducible builds
-
+## Infiltrated build system
 Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
+
+
 
 # Conslusion
 
