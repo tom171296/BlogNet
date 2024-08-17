@@ -92,7 +92,9 @@ warning NU1903: Package 'System.Text.RegularExpressions' 4.3.0 has a known high 
 
 To make the actual build fail when a vulnerability is found, you can add the following line to your project file:
 
-`<TreatWarningsAsErrors>true</TreatWarningsAsErrors>`
+```XML
+<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+```
 
 This line will make sure that the build will fail when a vulnerability is found. This will make sure that you don't introduce a vulnerable package with a new release and forces you to update/patch the vulnerability. Adding the above steps will fail your build, that is something you have to keep in mind. Like for me, if I need to fix a production issue that requires a new build, I am forced to fix the vulnerability this way. You have to keep in mind that this is blokking and figure out a way for your organization to deal with this.
 
@@ -103,7 +105,7 @@ Because of the way a nuget restore works (it uses the first source that responds
 
 Imagine you are using the package `MyCompany.Common` with version and you reference it in your project file like this `<PackageReference Include="MyCompany.Common" Version="1.0.*" />`. You have a connection to your own private feed and the public Nuget feed. The hacker uploads a package with the name `MyCompany.Common` with version `1.0.1` to the public Nuget feed. When you run a restore, NuGet will restore the package of the hacker because of the resolution rules.
 
-It is good to understand how [Nuget semantic versioning works](https://learn.microsoft.com/en-us/nuget/concepts/package-versioning?tabs=semver20sort#references-in-project-files-packagereference) and what the risks are of the way you reference your packages in your project file.
+With the way you define your package version references, you can unintentionally introduce a new way your software gets vulnerable for a supply chain attack. It is good to understand how [Nuget semantic versioning works](https://learn.microsoft.com/en-us/nuget/concepts/package-versioning?tabs=semver20sort#references-in-project-files-packagereference) and what the risks are of the way you reference your packages in your project file.
 
 ### Mitigation
 By default, having both a public and a private feed is a risk. I would recommend to **only use a private feed**. This way you (your company) has control over the packages that are available to your software projects. You can configure Nuget to only use the private feed. The configuration of Nuget goes via a [`nuget.config` file](https://learn.microsoft.com/en-us/nuget/reference/nuget-config-file). This file can be placed in the root of your project or in the root of your solution. 
@@ -127,6 +129,10 @@ The second thing you can do is to configure Nuget to pull certain images from a 
 
 A third thing that you can do is to configure trusted signers. This means that you can configure Nuget to only accept packages that are signed by a certain trusted signer. This way you can make sure that the packages that you are using are signed by a trusted source. This can be done by configuring the `nuget.config` file like this:
 ```XML
+<config>
+   <add key="signatureValidationMode" value="require" /> <!-- Require all signatures of publisher to be validated -->
+</config>
+
 <trustedSigners>
    <author name="MyCompany">
       <certificate fingerprint="1234567890" hashAlgorithm="SHA256" allowUntrustedRoot="false" />
@@ -137,24 +143,29 @@ A third thing that you can do is to configure trusted signers. This means that y
 To protect your software from the serious risks of dependency confusion, it's essential to take proactive measures. Start by configuring Nuget to only use a private feed, ensuring control over the packages integrated into your projects. If you must use a public feed, mitigate risks by claiming your package prefix, setting up package source mapping, and configuring trusted signers. Taking these steps will significantly reduce the likelihood of malicious code infiltrating your software supply chain. Act now by reviewing and updating your Nuget configurations to safeguard your projects against these potential vulnerabilities.
 
 ## Typosquatting attack
+A different way to attack your software supply chain with the focus on your dependencies is by using a typosquatting attack. Typosquatting is a form of cybersquatting that relies on mistakes such as typographical errors made by users when inputting a website address into a web browser. Should a user accidentally enter an incorrect website address, they may be led to an alternative website that could contain malware, phishing scams, or other malicious content.
+
+In .NET we have the command `dotnet add package <package-name>`. This command will add a package to your project. The package name that you provide is used to download the package from the Nuget feed. If you make a typo in the package name, Nuget will try to download the package with the typo in the name. This is where the risk of typosquatting comes in. A hacker can upload a package with a name that is very similar to a popular package. If you make a typo in the package name, Nuget will download the package from the hacker instead of the package from the original author. Looking at the `MyCompany.Common` example, the hacker can upload a package with the name `MyCompany.Commonn` to the public Nuget feed. If you make a typo in the package name, Nuget will download the package from the hacker.
+
+### Mitigation
+
+
 -- what is typosquatting
 -- why are you vulnerable
 -- how to mitigate
 --- use a private feed
 --- trusted signers
 
-
-
-
-## Code signing
-
--- Code signing
---- What is code signing
-
 ## Infiltrated build system
 Another example that shocked the world is the [SolarWinds hack](https://www.techtarget.com/whatis/feature/SolarWinds-hack-explained-Everything-you-need-to-know). In this hack, the attackers inserted a backdoor into the SolarWinds Orion software. This backdoor was then distributed to all customers of SolarWinds. This backdoor was then used to infiltrate the networks of the customers of SolarWinds.
 
+-- package lock file
+-- reproducible builds
 
+## Code signing ?????
+
+-- Code signing
+--- What is code signing
 
 # Conslusion
 
