@@ -39,7 +39,7 @@ This blog focuses on the **Build track**, because that’s where attestation and
 
 ## The Producer's Responsibility: Building with Integrity
 
-As a producer, your job is to prove that your software was built securely and consistently. That boils down to:  
+As a producer, your job is to prove that your software was built securely and consistently. That boils down to:
 
 ### 🔒 Securing the Build Pipeline
 
@@ -64,6 +64,7 @@ jobs:
       id-token: write # required for keyless signing
 ```
 That last line (id-token: write) is important — it enables OIDC tokens for keyless signing with Cosign.
+This is needed for a
 
 ### 📝 Generating Provenance, The Birth Certificate for Your Software
 Provenance gives consumers the ability to trace an artifact back to its exact source and build process. 
@@ -89,15 +90,42 @@ permissions:
     packages: write
     attestations: write # required to push attestation to registry
 ```
+
+Creating provenance can be done for both container images and generic artifacts.
 Generating and adding the build provenance is as simple as adding the following step to your build job:
 
 ```yaml
+# Container image
+- name: Attest
+  uses: actions/attest-build-provenance@v3
+  with:
+    subject-path: '${{ github.workspace }}/my-app'
+```
+
+```yaml
+# Generic artifact
 - name: Generate artifact attestation
-    uses: actions/attest-build-provenance@v2
-    with:
-        subject-name: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
-        subject-digest: ${{ needs.build.outputs.digest }}
-        push-to-registry: true
+  uses: actions/attest-build-provenance@v3
+  with:
+      subject-name: ${{ env.ARTIFACT_NAME }}
+      subject-digest: ${{ needs.build.outputs.artifact-digest }}
+      push-to-registry: false
+```
+
+There is a step earlier in the process that builds the docker image and has a digest output that is used as input to the
+provenance generation step.
+```yaml
+  - name: Build and push Docker image
+        id: build_and_push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./Services
+          file: ./Services/Catalog/dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+    
+outputs:
+  digest: ${{ steps.build_and_push.outputs.digest }}
 ```
 
 ### Adding Attestation: The Digital Signature of Trust
@@ -123,18 +151,31 @@ In the example above, the `actions/attest-build-provenance` uses [sigstore](http
 It uses keyless signing by default and leverages GitHub's OIDC provider to sign the provenance file.
 You can also configure it to use key-based signing if you prefer.
 
-Running the `actions/attest-build-provenance@v2` action generates a provenance file and can optionally push 
-it to your container registry. In GitHub, to see the generated provenance as attestation, go to the "Actions" 
-tab, in the menu on the left, select "Attestations". There you will see all the attestations for your repository.
+Running the `actions/attest-build-provenance@v3` action generates a provenance file and can optionally push 
+it to your container registry. In GitHub, to see [the generated provenance as attestation](https://github.com/tom171296/CraftedSpecially/attestations), 
+go to the "Actions" tab, in the menu on the left, select "Attestations". 
+There you will see all the attestations for your repository.
+
+![GitHub Attestations Tab](/assets/images/2025/provenance-and-attestation/attestation-tab.png)
 
 A provenance file isn't just something you generate and forget about. It's something anyone consuming your software
-can use to verify its integrity. SLSA not just describes that provenace should be generated, but also that it should be
+can use to verify its integrity. SLSA not just describes that provenance should be generated, but also that it should be
 distributed alongside the artifact. The Cosign signing action in the GitHub workflow adds a record of what was signed to 
 the public [Rekor transparency log](https://rekor.sigstore.dev/).
 
 ### Example: Full GitHub Actions Workflow with Provenance and Attestation
 To see a complete setup of a GitHub Actions workflow that builds a .NET application, generates provenance, and adds attestation,
-[check out this example](https://github.com/tom171296/CraftedSpecially/blob/issues/revamp-setup/.github/workflows/catalog-service.yml).
+[see the CraftedSpecially repo’s catalog service workflow as an example.](https://github.com/tom171296/CraftedSpecially/blob/issues/revamp-setup/.github/workflows/catalog-service.yml).
+
+## What Happens If You Skip Provenance and Attestation?  
+
+Without provenance and attestation, you’re left with a big blind spot: you can’t prove how or where your software was built. That means:  
+
+- **Artifact swapping risk** → An attacker could upload a malicious artifact to your registry, and consumers would have no way to tell it didn’t come from your pipeline.  
+- **Silent tampering** → Even if you scanned your code and dependencies, a compromised build system could inject malware *after* those checks.  
+- **No chain of custody** → In an incident, you can’t trace an artifact back to the source commit, build environment, or who signed off on it.  
+
+Put simply: skipping provenance and attestation means trusting your supply chain on blind faith. With them, you gain evidence that your artifacts are verifiable and tamper-evident.  
 
 ## Get started today
 You don't need to wait for perfect security to start using provenance and attestation. Start small and iterate. Here are some steps to get started:
@@ -147,4 +188,6 @@ You don't need to wait for perfect security to start using provenance and attest
 As a consumer, you should verify the provenance and attestation of any software you use. This ensures that the software
 was built securely and has not been tampered with. In my next blog post, I'll cover how to set up verification in your deployment process.
 
-Sneak peek: Verifying provenance can be done using the GitHub CLI
+TODO Sneak peek: Verifying provenance can be done using the GitHub CLI
+
+👉 In my next blog post, I’ll go deeper into integrating verification into your deployment pipeline — so that unsigned or invalid artifacts never make it to production.
