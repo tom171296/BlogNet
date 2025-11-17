@@ -1,17 +1,24 @@
 ---
-title: "No signature, no deployment: Provenance and attestation"
+title: "If You Can’t Prove It, Don’t Ship It: Provenance and Attestation Explained"
 date: 2025-09-01
 tags: [security, slsa, devsecops, csharp, dotnet, github-actions, provenance, attestation]
 ---
 
-# No signature, no deployment: Provenance and attestation
+# If You Can’t Prove It, Don’t Ship It: Provenance and Attestation Explained
 
-The software supply chain is now one of the most common attack surfaces.  
-Incidents like SolarWinds and Codecov showed us how attackers can compromise not the app itself, but the systems that
-build and deliver it. To reduce this risk, we need stronger guarantees about our artifacts. Two critical building blocks
-here are **attestation** and **provenance**.  
+There is a hard truth most developers still underestimate: **your build pipeline is now one of the easiest ways for attackers to compromise your software.**
 
-The examples in this blog use .NET and GitHub, but the principles apply broadly across technologies and platforms.  
+You can run linters, unit tests, SAST, DAST, dependency scans but still ship malware.
+If you can't prove **what you built**, **how it was built** and that **it hasn't been tampered** with, you're asking your users to trust you on blind faith.
+
+With the current state of software supply chain attacks, this is no longer acceptable, 
+not for customers, not for regulators and certainly not for critical systems.
+This is why developers need to start generating **provenance** and adding **attestation** to their build artifacts.
+
+With these in place, your build artifacts become verifiable, traceable and tamper-evident.
+This isn't future-state security, it's the new baseline for responsible software development.
+
+In this blogpost, I'll explain what provenance and attestation are, why they matter, and how you can implement them in your build pipelines using GitHub Actions and .NET.
 
 ---
 
