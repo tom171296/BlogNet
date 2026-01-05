@@ -10,7 +10,7 @@ There is a hard truth most developers still underestimate: **your build pipeline
 attackers to compromise your software.** Building trust in your supply chain is a guarantee you can no longer afford
 to ignore.
 
-You can run linters, unit tests, SAST, DAST, dependency scans but still ship malware.
+You can run linters, unit tests, SAST, DAST, and dependency scans but still ship malware.
 If you can't prove **what you built**, **how it was built** and that **it hasn't been tampered** with, you're 
 asking your users to trust you on blind faith.
 
@@ -38,7 +38,7 @@ every link in the chain is a chance for trouble.
 - Helps you evaluate **the trustworthiness of what you consume**.  
 - Provides a **checklist** to improve how you produce software.  
 
-The SLSA framework defines different tracks and levels per track that defines increasing requirements for software 
+The SLSA framework defines different tracks and levels per track that define increasing requirements for software 
 supply chain security. This blog post focuses on the **Build** track, specifically the producing artifacts section of the track.
 The entire requirements for this section can be found on the [SLSA website](https://slsa.dev/spec/v1.2/build-requirements).
 
@@ -66,27 +66,24 @@ For higher SLSA levels and stronger integrity guarantees, provenance becomes str
 deeper, more technical understanding of the provenance predicate — the structured data describing the build, environment, and 
 verification details.
 
-SLSA build level describes the overall provenance integrity according to the minimun requirements on its:
+SLSA build level describes the overall provenance integrity according to the minimum requirements on its:
 - **Completeness**: What information is contained in the provenance?
 - **Authenticity**: How strongly can the provenance be tied back to the builder?
 - **Accuracy**: How resistant is the provenance to tampering?
 
-Provenance gives consumers the ability to detect tampering. If an attacker swaps your artifact in a registry, the mismatch can be 
-detected simply by verifying the provenance against your repository and commit.
-
-Provenance gives consumers the ability to trace an artifact back to its exact source and build process. 
-If an attacker swaps your artifact in the registry, consumers can detect the mismatch by verifying the 
-provenance against your repo and commit.
+Provenance gives consumers the ability to trace an artifact back to its exact source
+and build process and detect tampering. If an attacker swaps your artifact in the registry,
+consumers can detect the mismatch by verifying the provenance against your repository and commit.
 
 From there, the levels build on each other:
 
-- Provenance exists (required for all SLSA levels)
+- **Provenance exists** (required for all SLSA levels)
   The build process must produce provenance that cryptographically identifies the artifact and describes how it was built.
 
-- Provenance is authentic (SLSA Level 2+)
+- **Provenance is authentic** (SLSA Level 2+)
   Consumers must be able to validate signatures, trust the builder, and confirm integrity.
 
-- Provenance is unforgeable (SLSA Level 3)
+- **Provenance is unforgeable** (SLSA Level 3)
   Secrets are isolated, protected from user builds, and every field in the provenance is generated or verified by the build platform.
 
 An example of a provenance file in [in-toto](https://in-toto.io/) format looks like this:
@@ -150,10 +147,10 @@ Provenance is a detailed record of how your software was built. It includes:
 - **Build steps**: Commands run, configurations used.
 - **Outputs**: Artifacts produced, their hashes.
 
-This info is usually stored in a **provenance file** (e.g., in [in-toto](https://in-toto.io/) format).
+This info is usually stored in a **provenance file** (e.g., in [in-toto](https://in-toto.io/) format), an industry standard for supply chain metadata.
 
 SLSA created a [provenance generator action](https://github.com/slsa-framework/slsa-github-generator) to help 
-automate this process. This action support several ecosystems but the docker container support is still work in progress.
+automate this process. This action supports several ecosystems but the docker container support is still work in progress.
 Github published an [official action](https://github.com/actions/attest-build-provenance) that can be used to generate
 provenance for both generic artifacts and container images. I'll focus on this action in the example below.
 
@@ -192,13 +189,13 @@ There is a step earlier in the process that builds the docker image and has a di
 provenance generation step.
 ```yaml
   - name: Build and push Docker image
-        id: build_and_push
-        uses: docker/build-push-action@v3
-        with:
-          context: ./Services
-          file: ./Services/Catalog/dockerfile
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+    id: build_and_push
+    uses: docker/build-push-action@v3
+    with:
+      context: ./Services
+      file: ./Services/Catalog/dockerfile
+      push: true
+      tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
     
 outputs:
   digest: ${{ steps.build_and_push.outputs.digest }}
@@ -246,19 +243,187 @@ There you will see all the attestations for your repository.
 ![GitHub Attestations Tab](/assets/images/2025/provenance-and-attestation/attestation-tab.png)
 
 A provenance file isn't just something you generate and forget about. It's something anyone consuming your software
-can use to verify its integrity. SLSA not just describes that provenance should be generated, but also that it should be
-distributed alongside the artifact. The action in the GitHub workflow adds a record of what was signed to 
-the public [Rekor transparency log](https://rekor.sigstore.dev/).
+can use to verify its integrity. SLSA doesn't just require that provenance be generated, but also that it be distributed. 
+The action in the GitHub workflow adds a record of what was signed to the public [Rekor transparency log](https://rekor.sigstore.dev/).
 
 ### Example: Full GitHub Actions Workflow with Provenance and Attestation
 To see a complete setup of a GitHub Actions workflow that builds a .NET application, generates provenance, and adds attestation,
 [see the CraftedSpecially repo’s catalog service workflow as an example.](https://github.com/tom171296/CraftedSpecially/blob/main/.github/workflows/catalog-service.yml).
 
 ## Verifying artifacts: The Consumer's Duty
-TODO
+Generating provenance is only half the equation. As a consumer of software artifacts, whether you're deploying third-party containers, using open-source packages, or running your own internal services, verification is your responsibility.
+Without verification, attestations are just nice-to-have metadata. With verification, they become enforceable security controls
+that prevent compromised or tampered artifacts from reaching your systems.
 
-## What Happens If You Skip Provenance and Attestation?  
+Verification should happen at three layers: manual inspection during security reviews, automated checks in CI/CD pipelines,
+and runtime enforcement at deployment. Each layer provides defense-in-depth against supply chain attacks.
 
+### What Verification Actually Checks
+
+When you verify an attestation, you're validating three things:
+
+1. **Authenticity** - The attestation was cryptographically signed by a trusted builder
+2. **Integrity** - The artifact's digest matches what's in the attestation (preventing artifact swapping)
+3. **Policy compliance** - The build meets your security requirements
+
+The digest binding is critical. Without it, an attacker could reuse a legitimate attestation for a malicious artifact.
+Verification tools automatically compute the artifact's digest and confirm it matches the signed attestation.
+
+### Manual Verification: Security Reviews and Incident Response
+
+The GitHub CLI makes verification straightforward for security reviews and investigations:
+
+```bash
+# Basic verification - checks signature and digest
+gh attestation verify oci://ghcr.io/tom171296/crafted-specially/catalog-api:latest \
+  --owner tom171296
+
+# Enforce specific security properties
+gh attestation verify oci://ghcr.io/tom171296/crafted-specially/catalog-api:latest \
+  --owner tom171296 \
+  --signer-workflow tom171296/CraftedSpecially/.github/workflows/catalog-service.yml \
+  --source-ref refs/heads/main \
+  --deny-self-hosted-runners
+```
+
+The `--deny-self-hosted-runners` flag is a critical security control. Self-hosted runners can be compromised to inject
+malicious code during builds, so enforcing GitHub-hosted runners ensures builds happen in isolated, ephemeral environments.
+
+For deeper investigation, download and inspect the provenance content:
+
+```bash
+# Download attestation
+gh attestation download oci://ghcr.io/tom171296/crafted-specially/catalog-api:latest \
+  --owner tom171296 -o attestation.json
+
+# Inspect key properties
+cat attestation.json | jq '.predicate.buildDefinition.externalParameters.workflow.repository'
+cat attestation.json | jq '.predicate.buildDefinition.resolvedDependencies[0].digest.gitCommit'
+cat attestation.json | jq '.predicate.buildDefinition.internalParameters.github.runner_environment'
+```
+
+This is invaluable during incident response - the provenance tells you exactly which workflow, commit, and runner produced
+an artifact, helping you identify the attack vector.
+
+### Pipeline Validation: Automated Verification in CI/CD
+
+Manual verification doesn't scale. For production deployments, integrate verification into your pipelines to automatically
+reject unverified artifacts:
+
+```yaml
+name: Deploy to Production
+
+jobs:
+  verify-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify image attestation
+        run: |
+          gh attestation verify "oci://${{ env.IMAGE }}" \
+            --owner tom171296 \
+            --signer-workflow tom171296/CraftedSpecially/.github/workflows/catalog-service.yml \
+            --source-ref refs/heads/main \
+            --deny-self-hosted-runners
+
+      - name: Deploy to Kubernetes
+        run: kubectl set image deployment/catalog-api catalog-api=${{ env.IMAGE }}
+```
+
+This ensures no unverified artifact reaches production. If an attacker compromises your container registry and swaps an
+image, deployment fails because the attestation won't match.
+
+For complex policies, download the provenance and validate it programmatically. This lets you enforce custom rules like
+"must be from main branch" or "must use specific build configuration" before deployment.
+
+### Runtime Validation: Admission Control with Kyverno
+
+The final defense layer is runtime enforcement. [Kyverno](https://kyverno.io/) is a Kubernetes policy engine that verifies
+attestations when pods are created. Even if an unverified image bypasses your CI/CD checks, Kyverno blocks it at runtime.
+
+A basic policy requiring SLSA provenance attestations:
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-provenance
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: verify-provenance
+      match:
+        any:
+        - resources:
+            kinds: [Pod]
+      verifyImages:
+      - imageReferences:
+        - "ghcr.io/tom171296/*"
+        attestations:
+        - predicateType: https://slsa.dev/provenance/v1
+          attestors:
+          - entries:
+            - keyless:
+                subject: "https://github.com/tom171296/*"
+                issuer: "https://token.actions.githubusercontent.com"
+```
+
+For production workloads, enforce stricter policies by validating provenance content:
+
+```yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: production-policy
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: verify-provenance-content
+      match:
+        any:
+        - resources:
+            kinds: [Pod]
+            namespaces: [production]
+      verifyImages:
+      - imageReferences:
+        - "ghcr.io/tom171296/crafted-specially/*"
+        attestations:
+        - predicateType: https://slsa.dev/provenance/v1
+          attestors:
+          - entries:
+            - keyless:
+                subject: "https://github.com/tom171296/CraftedSpecially/.github/workflows/*@refs/heads/main"
+                issuer: "https://token.actions.githubusercontent.com"
+          conditions:
+          - all:
+            # Must be from main branch
+            - key: "{{ buildDefinition.externalParameters.workflow.ref }}"
+              operator: Equals
+              value: "refs/heads/main"
+            # Must use GitHub-hosted runners
+            - key: "{{ buildDefinition.internalParameters.github.runner_environment }}"
+              operator: Equals
+              value: "github-hosted"
+```
+
+When introducing these policies, start with `validationFailureAction: Audit` to identify violations without blocking
+deployments, then switch to `Enforce` once your images have valid attestations.
+
+### Defense in Depth: Why All Three Layers Matter
+
+The most effective approach combines all three verification layers:
+
+- **Manual verification** for security reviews and incident investigation
+- **Pipeline verification** catches issues before deployment
+- **Runtime enforcement** as the final safeguard
+
+If an attacker compromises your container registry and swaps an image:
+- Your CI/CD pipeline rejects it during deployment (verification fails)
+- If the pipeline is bypassed, Kyverno blocks the pod from starting
+- Manual verification commands provide forensic evidence
+
+Each layer provides redundancy. No single failure point allows a compromised artifact through.
+
+## What Happens If You Skip Provenance?  
 Without provenance and attestation, you’re left with a big blind spot: you can’t prove how or where your software was built. That means:  
 
 - **Artifact swapping risk** → An attacker could upload a malicious artifact to your registry, and consumers would have no way to tell it didn’t come from your pipeline.  
@@ -267,7 +432,11 @@ Without provenance and attestation, you’re left with a big blind spot: you can
 
 Put simply: skipping provenance and attestation means trusting your supply chain on blind faith. With them, you gain evidence that your artifacts are verifiable and tamper-evident.
 
-## Get started today
+## Wrapping up
+Provenance and attestation transform your artifacts from "trust me" to "verify me." The practices
+covered here, generating cryptographically signed build records and distributing them alongside
+your artifacts, establish a verifiable chain of custody from source to deployment.
+
 You don't need to wait for perfect security to start using provenance and attestation. Start small and iterate. Here are some steps to get started:
 1. **Review your build pipeline**: Identify areas where you can improve security.
 2. **Implement provenance generation**: Use the `actions/attest-build-provenance` action in your GitHub workflows.
