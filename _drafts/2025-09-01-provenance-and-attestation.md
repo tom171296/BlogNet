@@ -153,9 +153,9 @@ Provenance is a detailed record of how your software was built. It includes:
 This info is usually stored in a **provenance file** (e.g., in [in-toto](https://in-toto.io/) format).
 
 SLSA created a [provenance generator action](https://github.com/slsa-framework/slsa-github-generator) to help 
-automate this process.
-
-TODO compare SLSA action with github action
+automate this process. This action support several ecosystems but the docker container support is still work in progress.
+Github published an [official action](https://github.com/actions/attest-build-provenance) that can be used to generate
+provenance for both generic artifacts and container images. I'll focus on this action in the example below.
 
 Firstly, you need to give the build more permissions to write the provenance file:
 ```yaml
@@ -164,6 +164,7 @@ permissions:
     contents: read
     packages: write
     attestations: write # required to push attestation to registry
+    artifact-metadata: write # Allow writing artifact metadata
 ```
 
 Creating provenance can be done for both container images and generic artifacts.
@@ -204,9 +205,10 @@ outputs:
 ```
 
 ### Adding Attestation: The Digital Signature of Trust
-Without a signature, anyone could generate fake provenance. With attestation, consumers can cryptographically 
-verify that the provenance really came from your build pipeline. Unsigned provenance is informative, but not authoritative. 
-Without attestation, there’s no guarantee it hasn’t been tampered with. Signed provenance is **evidence**.
+Without a signature, anyone could generate fake provenance. With [attestation](https://docs.docker.com/build/metadata/attestations/), 
+consumers can cryptographically verify that the provenance really came from your build pipeline. 
+Unsigned provenance is informative, but not authoritative. Without attestation, there’s no guarantee 
+it hasn’t been tampered with. Signed provenance is **evidence**.
 
 Attestation is the process of signing the provenance file, creating a tamper-evident seal. This can be done using
 tools like [Cosign](https://github.com/sigstore/cosign).
@@ -226,7 +228,17 @@ In the example above, the `actions/attest-build-provenance` uses [sigstore](http
 It uses keyless signing by default and leverages GitHub's OIDC provider to sign the provenance file.
 You can also configure it to use key-based signing if you prefer.
 
-Running the `actions/attest-build-provenance@v3` action generates a provenance file and can optionally push 
+### Distributing Provenance
+Producing provenance is only useful if consumers can actually find and verify it. In SLSA, provenance is distributed as attestations: 
+signed records that connect a specific artifact to the build that produced it. These attestations should travel with the artifact 
+wherever it is published so that verification remains possible at any point in the supply chain.
+
+Attestations belong to individual artifacts, not whole releases. A release may contain multiple artifacts produced on different
+platforms or at different times, and each artifact may have its own provenance. Ecosystems need predictable ways to map an artifact
+to its attestation, whether through naming conventions, registry metadata, or artifact directories. Once published, attestations
+should not change; if something needs correction, a new artifact and new provenance must be created.
+
+Running the `actions/attest-build-provenance` action generates a provenance file and can optionally push 
 it to your container registry. In GitHub, to see [the generated provenance as attestation](https://github.com/tom171296/CraftedSpecially/attestations), 
 go to the "Actions" tab, in the menu on the left, select "Attestations". 
 There you will see all the attestations for your repository.
@@ -235,17 +247,14 @@ There you will see all the attestations for your repository.
 
 A provenance file isn't just something you generate and forget about. It's something anyone consuming your software
 can use to verify its integrity. SLSA not just describes that provenance should be generated, but also that it should be
-distributed alongside the artifact. The Cosign signing action in the GitHub workflow adds a record of what was signed to 
+distributed alongside the artifact. The action in the GitHub workflow adds a record of what was signed to 
 the public [Rekor transparency log](https://rekor.sigstore.dev/).
 
 ### Example: Full GitHub Actions Workflow with Provenance and Attestation
 To see a complete setup of a GitHub Actions workflow that builds a .NET application, generates provenance, and adds attestation,
 [see the CraftedSpecially repo’s catalog service workflow as an example.](https://github.com/tom171296/CraftedSpecially/blob/main/.github/workflows/catalog-service.yml).
 
-## Distributing Provenance
-
-
-## Validating Your Supply Chain: The Consumer's Duty
+## Verifying artifacts: The Consumer's Duty
 TODO
 
 ## What Happens If You Skip Provenance and Attestation?  
