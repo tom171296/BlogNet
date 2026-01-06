@@ -1,7 +1,12 @@
 ---
 title: "If You Can’t Prove It, Don’t Ship It: Provenance and Attestation Explained"
-date: 2025-09-01
+date: 2026-01-06
+excerpt: Learn how to secure your software supply chain with provenance and attestation using GitHub Actions
 tags: [security, slsa, devsecops, csharp, dotnet, github-actions, provenance, attestation]
+published: true
+cover-img: /assets/images/2026/provenance-and-attestation/header.png
+thumbnail-img: /assets/images/2026/provenance-and-attestation/header.png
+share-img: /assets/images/2026/provenance-and-attestation/header.png
 ---
 
 # If You Can’t Prove It, Don’t Ship It: Provenance and Attestation Explained
@@ -22,7 +27,7 @@ With these in place, your build artifacts become verifiable, traceable and tampe
 This isn't future-state security, it's the new baseline for responsible software development.
 
 In this blogpost, I'll explain what provenance and attestation are, why they matter, and how you can implement them 
-in your build pipelines using GitHub Actions and .NET.
+in your build pipelines using GitHub Actions.
 
 ## Introduction to SLSA: Why Your Software Supply Chain Needs a Guardian
 
@@ -63,7 +68,7 @@ The purpose of provenance is simple but powerful:
   - Others can reliably rebuild it if needed.
 
 For higher SLSA levels and stronger integrity guarantees, provenance becomes stricter and more detailed. This often requires a
-deeper, more technical understanding of the provenance predicate — the structured data describing the build, environment, and 
+deeper, more technical understanding of the provenance predicate,\ the structured data describing the build, environment, and 
 verification details.
 
 SLSA build level describes the overall provenance integrity according to the minimum requirements on its:
@@ -86,7 +91,7 @@ From there, the levels build on each other:
 - **Provenance is unforgeable** (SLSA Level 3)
   Secrets are isolated, protected from user builds, and every field in the provenance is generated or verified by the build platform.
 
-An example of a provenance file in [in-toto](https://in-toto.io/) format looks like this:
+An example of a provenance file looks like this:
 ```json
 {
     "_type": "https://in-toto.io/Statement/v1",
@@ -195,7 +200,7 @@ provenance generation step.
       context: ./Services
       file: ./Services/Catalog/dockerfile
       push: true
-      tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+      tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest # never use latest in production!
     
 outputs:
   digest: ${{ steps.build_and_push.outputs.digest }}
@@ -203,13 +208,16 @@ outputs:
 
 ### Adding Attestation: The Digital Signature of Trust
 Without a signature, anyone could generate fake provenance. With [attestation](https://docs.docker.com/build/metadata/attestations/), 
-consumers can cryptographically verify that the provenance really came from your build pipeline. 
-Unsigned provenance is informative, but not authoritative. Without attestation, there’s no guarantee 
-it hasn’t been tampered with. Signed provenance is **evidence**.
+consumers can cryptographically verify that the provenance really came from your build pipeline, has not been tampered with,
+and is explicitly bound to a specific artifact. Unsigned provenance may provide useful context, but it is not authoritative and 
+provides no guarantee against tampering or misassociation. Signed provenance, by contrast, serves as verifiable **evidence**.
 
-Attestation is the process of signing the provenance file, creating a tamper-evident seal. This can be done using
-tools like [Cosign](https://github.com/sigstore/cosign).
-There are two main ways to sign:
+Attestation is the act of cryptographically signing provenance and associating it with a particular artifact (for example, by digest), 
+creating a tamper-evident and artifact-scoped seal. This is typically done using tools such as [Cosign](https://github.com/sigstore/cosign), 
+which ensure that the attestation cannot be reused for a different artifact. 
+
+There are two primary approaches to signing:
+
 - **Key-based signing**: You manage private keys to sign the provenance. This requires secure key storage and rotation.
 - **Keyless signing**: Uses OIDC tokens to sign without managing keys. This is more secure and easier to manage.
 
@@ -222,7 +230,7 @@ In the example above, the `actions/attest-build-provenance` uses [sigstore](http
 - [Fulcio](https://github.com/sigstore/fulcio) is used as the certificate authority to issue short-lived certificates.
 - [Rekor](https://github.com/sigstore/rekor) is used as the transparency log to record the signature and certificate.
 
-It uses keyless signing by default and leverages GitHub's OIDC provider to sign the provenance file.
+The action uses keyless signing by default and leverages GitHub's OIDC provider to sign the provenance file.
 You can also configure it to use key-based signing if you prefer.
 
 ### Distributing Provenance
@@ -245,6 +253,10 @@ There you will see all the attestations for your repository.
 A provenance file isn't just something you generate and forget about. It's something anyone consuming your software
 can use to verify its integrity. SLSA doesn't just require that provenance be generated, but also that it be distributed. 
 The action in the GitHub workflow adds a record of what was signed to the public [Rekor transparency log](https://rekor.sigstore.dev/).
+
+At the time of writing, there is an open [issue](https://github.com/actions/attest-build-provenance/issues/781) where the support for 
+creating an [artifact metadata storage record](https://docs.github.com/en/rest/orgs/artifact-metadata?apiVersion=2022-11-28#create-artifact-metadata-storage-record)
+is not working as expected. This means that there is no meta data record created currently.
 
 ### Example: Full GitHub Actions Workflow with Provenance and Attestation
 To see a complete setup of a GitHub Actions workflow that builds a .NET application, generates provenance, and adds attestation,
@@ -324,9 +336,6 @@ jobs:
             --signer-workflow tom171296/CraftedSpecially/.github/workflows/catalog-service.yml \
             --source-ref refs/heads/main \
             --deny-self-hosted-runners
-
-      - name: Deploy to Kubernetes
-        run: kubectl set image deployment/catalog-api catalog-api=${{ env.IMAGE }}
 ```
 
 This ensures no unverified artifact reaches production. If an attacker compromises your container registry and swaps an
